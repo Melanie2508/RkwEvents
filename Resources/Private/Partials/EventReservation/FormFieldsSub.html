@@ -1,4 +1,5 @@
 {namespace rkw=RKW\RkwEvents\ViewHelpers}
+{namespace rkwRegistration=RKW\RkwRegistration\ViewHelpers}
 
 <!-- add further persons -->
 <h2>
@@ -45,6 +46,24 @@
 				</f:if>
 			</label>
 			<f:form.select property="addPerson.{i.index}.salutation" id="tx_rkwevents_pi1_{i.index}_salutation" class="tx-rkwevents-person-{i.cycle}" options="{99: '{f:translate(key: \'tx_rkwevents_domain_model_eventreservation.salutation.I.99\')}', 0: '{f:translate(key: \'tx_rkwevents_domain_model_eventreservation.salutation.I.0\')}', 1: '{f:translate(key: \'tx_rkwevents_domain_model_eventreservation.salutation.I.1\')}'}" />
+
+		</div>
+
+		<div class="v320-1">
+
+			<label class="form-label" for="tx_rkwevents_pi1_{i.index}_title">
+				<f:translate key="tx_rkwevents_domain_model_eventreservation.title" />
+				<f:if condition="<rkw:isMandatoryField fieldName='title' mandatoryFields='{settings.mandatoryFields.eventReservationAdditionalPersons}' />">
+					<span class='optional'>&nbsp;<f:translate key="tx_rkwevents_fluid.label_optional" /></span>
+				</f:if>
+			</label>
+			<f:form.textfield property="addPerson.{i.index}.title" id="tx_rkwevents_pi1_{i.index}_title" additionalAttributes="{autocomplete: 'off'}"/>
+			<rkwRegistration:titleAutoComplete
+				inputId="tx_rkwevents_pi1_{i.index}_title"
+				container="tx_rkwevents_pi1_{i.index}_title_autocomplete-container"
+				list="tx_rkwevents_pi1_{i.index}_title_autocomplete-results"
+			></rkwRegistration:titleAutoComplete>
+
 		</div>
 
 		<div class="v320-1">
@@ -58,6 +77,7 @@
 			<f:form.textfield property="addPerson.{i.index}.firstName" id="tx_rkwevents_pi1_{i.index}_firstName" class="tx-rkwevents-person-{i.cycle}"/>
 
 		</div>
+
 		<div class="v320-1">
 			<label class="form-label" for="tx_rkwevents_pi1_{i.index}_lastName">
 				<f:translate key="tx_rkwevents_domain_model_eventreservation.lastName" />

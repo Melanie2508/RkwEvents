@@ -170,6 +170,7 @@ plugin.tx_rkwevents {
         partialRootPaths {
             0 = EXT:rkw_events/Resources/Private/Partials/
             1 = {$plugin.tx_rkwevents.view.partialRootPath}
+            2 = EXT:rkw_registration/Resources/Private/Partials/
         }
     }
 	persistence {

@@ -42,6 +42,20 @@ class EventReservationAddPerson extends \TYPO3\CMS\Extbase\DomainObject\Abstract
     protected $salutation = 99;
 
     /**
+     * title
+     *
+     * @var string
+     */
+    protected $title;
+
+    /**
+     * txRkwregistrationTitle
+     *
+     * @var \RKW\RkwRegistration\Domain\Model\Title
+     */
+    protected $txRkwregistrationTitle = null;
+
+    /**
      * firstName
      *
      * @var string
@@ -117,6 +131,52 @@ class EventReservationAddPerson extends \TYPO3\CMS\Extbase\DomainObject\Abstract
     public function setSalutation($salutation)
     {
         $this->salutation = $salutation;
+    }
+
+    /**
+     * Returns the title
+     *
+     * @return string $title
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Sets the title
+     *
+     * @param string $title
+     * @return void
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    }
+
+    /**
+     * Returns the txRkwregistrationTitle
+     *
+     * @return \RKW\RkwRegistration\Domain\Model\Title $txRkwregistrationTitle
+     */
+    public function getTxRkwregistrationTitle()
+    {
+        return $this->txRkwregistrationTitle;
+    }
+
+    /**
+     * Sets the txRkwregistrationTitle
+     *
+     * Hint: default "null" is needed to make value in forms optional
+     *
+     * @param \RKW\RkwRegistration\Domain\Model\Title $txRkwregistrationTitle
+     * @return void
+     */
+    public function setTxRkwregistrationTitle(\RKW\RkwRegistration\Domain\Model\Title $txRkwregistrationTitle = null)
+    {
+        if ($txRkwregistrationTitle) {
+            $this->txRkwregistrationTitle = $txRkwregistrationTitle;
+        }
     }
 
     /**

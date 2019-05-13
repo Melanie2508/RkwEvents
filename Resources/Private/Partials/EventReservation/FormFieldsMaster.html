@@ -16,6 +16,21 @@
 	</div>
 
 	<div class="v320-1">
+		<label class="form-label" for="tx_rkwevents_pi1_title">
+			<f:translate key="tx_rkwevents_domain_model_eventreservation.title" />
+			<f:if condition="<rkw:isMandatoryField fieldName='title' mandatoryFields='{settings.mandatoryFields.eventReservationMainPerson}' />">
+				<span class='optional'>&nbsp;<f:translate key="tx_rkwevents_fluid.label_optional" /></span>
+			</f:if>
+		</label>
+		<f:form.textfield property="title" id="tx_rkwevents_pi1_title" additionalAttributes="{autocomplete: 'off'}"/>
+		<rkwRegistration:titleAutoComplete
+			inputId="tx_rkwevents_pi1_title"
+			container="tx_rkwevents_pi1_title_autocomplete-container"
+			list="tx_rkwevents_pi1_title_autocomplete-results"
+		></rkwRegistration:titleAutoComplete>
+	</div>
+
+	<div class="v320-1">
 		<label class="form-label" for="tx_rkwevents_pi1_firstName">
 			<f:translate key="tx_rkwevents_domain_model_eventreservation.firstName" />
 			<f:if condition="<rkw:isMandatoryField fieldName='firstName' mandatoryFields='{settings.mandatoryFields.eventReservationMainPerson}' />">

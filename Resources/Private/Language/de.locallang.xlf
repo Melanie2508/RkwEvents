@@ -140,6 +140,10 @@
 				<source>Mrs.</source>
 				<target>Frau</target>
 			</trans-unit>
+			<trans-unit id="tx_rkwevents_domain_model_eventreservation.title" approved="yes">
+				<source>Title</source>
+				<target>Titel</target>
+			</trans-unit>
 			<trans-unit id="tx_rkwevents_domain_model_eventreservation.firstName" approved="yes">
 				<source>First name</source>
 				<target>Vorname</target>

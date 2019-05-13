@@ -382,12 +382,15 @@ class EventReservationController extends \TYPO3\CMS\Extbase\Mvc\Controller\Actio
                 //===
             }
 
+            $newEventReservation->setTxRkwregistrationTitle((\RKW\RkwRegistration\Utilities\TitleUtility::extractTxRegistrationTitle($newEventReservation->getTitle())));
+
             // register new user or simply send opt-in to existing user
             /** @var \RKW\RkwRegistration\Tools\Registration $registration */
             $registration = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('RKW\\RkwRegistration\\Tools\\Registration');
             $registration->register(
                 array(
                     'tx_rkwregistration_gender' => $newEventReservation->getSalutation(),
+                    'tx_rkwregistration_title'  => $newEventReservation->getTxRkwregistrationTitle(),
                     'first_name'                => $newEventReservation->getFirstName(),
                     'last_name'                 => $newEventReservation->getLastName(),
                     'company'                   => $newEventReservation->getCompany(),
@@ -670,6 +673,28 @@ class EventReservationController extends \TYPO3\CMS\Extbase\Mvc\Controller\Actio
             // this "editMode" is a sign / marker and a simple way to use the FormFields-Partial in multiple ways
             $this->view->assign('editMode', 1);
 
+            //  Set attribute title as string instead of \RKW\RkwRegistration\Domain\Model\Title
+            $eventReservation->setTitle($eventReservation->getTxRkwregistrationTitle()->getName());
+
+            /** @var \TYPO3\CMS\Extbase\Object\ObjectManager $objectManager */
+            $objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Object\\ObjectManager');
+            /** @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage $tempObjectStorage */
+            $tempObjectStorage = $objectManager->get('TYPO3\\CMS\\Extbase\\Persistence\\ObjectStorage');
+
+            // fetch all relevant objects in a temporary object storage
+            foreach ($eventReservation->getAddPerson() as $addPerson) {
+                if (
+                    $addPerson->getFirstName()
+                    || $addPerson->getLastName()
+                ) {
+                    $addPerson->setTitle($addPerson->getTxRkwregistrationTitle()->getName());
+                    $tempObjectStorage->attach($addPerson);
+                }
+            }
+
+            // override existing object storage
+            $eventReservation->setAddPerson($tempObjectStorage);
+
             $this->view->assign('eventReservation', $eventReservation);
             $this->view->assign('event', $eventReservation->getEvent());
 
@@ -734,6 +759,7 @@ class EventReservationController extends \TYPO3\CMS\Extbase\Mvc\Controller\Actio
                     $addPerson->getFirstName()
                     || $addPerson->getLastName()
                 ) {
+                    $addPerson->setTxRkwregistrationTitle((\RKW\RkwRegistration\Utilities\TitleUtility::extractTxRegistrationTitle($addPerson->getTitle())));
                     $tempObjectStorage->attach($addPerson);
                 }
             }
@@ -1133,6 +1159,7 @@ class EventReservationController extends \TYPO3\CMS\Extbase\Mvc\Controller\Actio
                 $addPerson->getFirstName()
                 || $addPerson->getLastName()
             ) {
+                $addPerson->setTxRkwregistrationTitle((\RKW\RkwRegistration\Utilities\TitleUtility::extractTxRegistrationTitle($addPerson->getTitle())));
                 $tempObjectStorage->attach($addPerson);
             }
         }
