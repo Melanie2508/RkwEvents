@@ -8,21 +8,21 @@
 	<div class="v320-1">
 		<label class="form-label" for="tx_rkwevents_pi1_salutation">
 			<f:translate key="tx_rkwevents_domain_model_eventreservation.salutation" />
-			<f:if condition="<rkw:isMandatoryField fieldName='salutation' mandatoryFields='{settings.mandatoryFields.eventReservationMainPerson}' />">
+			<f:if condition="<rkw:isMandatoryField fieldName='shippingAddress.salutation' mandatoryFields='{settings.mandatoryFields.eventReservationMainPerson}' />">
 				<span class='optional'>&nbsp;<f:translate key="tx_rkwevents_fluid.label_optional" /></span>
 			</f:if>
 		</label>
-		<f:form.select property="salutation" id="tx_rkwevents_pi1_salutation" value="{f:if(condition:'<rkw:or firstIsSalutation=\'true\' or1=\'{newEventReservation.salutation}\' or2=\'{editMode}\' />',then:'{newEventReservation.salutation}',else:'{frontendUser.txRkwregistrationGender}')}" options="{99: '{f:translate(key: \'tx_rkwevents_domain_model_eventreservation.salutation.I.99\')}', 0: '{f:translate(key: \'tx_rkwevents_domain_model_eventreservation.salutation.I.0\')}', 1: '{f:translate(key: \'tx_rkwevents_domain_model_eventreservation.salutation.I.1\')}'}" />
+		<f:form.select property="shippingAddress.gender" id="tx_rkwevents_pi1_salutation" value="{f:if(condition:'<rkw:or firstIsSalutation=\'true\' or1=\'{newEventReservation.shippingAddress.gender}\' or2=\'{editMode}\' />',then:'{newEventReservation.shippingAddress.gender}',else:'{frontendUser.txRkwregistrationGender}')}" options="{99: '{f:translate(key: \'tx_rkwevents_domain_model_eventreservation.salutation.I.99\')}', 0: '{f:translate(key: \'tx_rkwevents_domain_model_eventreservation.salutation.I.0\')}', 1: '{f:translate(key: \'tx_rkwevents_domain_model_eventreservation.salutation.I.1\')}'}" />
 	</div>
 
 	<div class="v320-1">
-		<label class="form-label" for="tx_rkwevents_pi1_title">
+		<label class="form-label" for="tx_rkwevents_pi1_txRkwregistrationTitle">
 			<f:translate key="tx_rkwevents_domain_model_eventreservation.title" />
-			<f:if condition="<rkw:isMandatoryField fieldName='title' mandatoryFields='{settings.mandatoryFields.eventReservationMainPerson}' />">
+			<f:if condition="<rkw:isMandatoryField fieldName='shippingAddress.title.name' mandatoryFields='{settings.mandatoryFields.eventReservationMainPerson}' />">
 				<span class='optional'>&nbsp;<f:translate key="tx_rkwevents_fluid.label_optional" /></span>
 			</f:if>
 		</label>
-		<f:form.textfield property="title" id="tx_rkwevents_pi1_title" additionalAttributes="{autocomplete: 'off'}"/>
+		<f:form.textfield property="shippingAddress.title.name" id="tx_rkwevents_pi1_title" additionalAttributes="{autocomplete: 'off'}" value="{newEventReservation.shippingAddress.title.name}"/>
 		<rkwRegistration:titleAutoComplete
 			inputId="tx_rkwevents_pi1_title"
 			container="tx_rkwevents_pi1_title_autocomplete-container"
@@ -33,21 +33,21 @@
 	<div class="v320-1">
 		<label class="form-label" for="tx_rkwevents_pi1_firstName">
 			<f:translate key="tx_rkwevents_domain_model_eventreservation.firstName" />
-			<f:if condition="<rkw:isMandatoryField fieldName='firstName' mandatoryFields='{settings.mandatoryFields.eventReservationMainPerson}' />">
+			<f:if condition="<rkw:isMandatoryField fieldName='shippingAddress.firstName' mandatoryFields='{settings.mandatoryFields.eventReservationMainPerson}' />">
 				<span class='optional'>&nbsp;<f:translate key="tx_rkwevents_fluid.label_optional" /></span>
 			</f:if>
 		</label>
-		<f:form.textfield property="firstName" id="tx_rkwevents_pi1_firstName" value="{f:if(condition:'<rkw:or or1=\'{newEventReservation.firstName}\' or2=\'{editMode}\' />',then:'{newEventReservation.firstName}',else:'{frontendUser.firstName}')}" additionalAttributes="{autocomplete:'fname'}" />
+		<f:form.textfield property="shippingAddress.firstName" id="tx_rkwevents_pi1_firstName" value="{f:if(condition:'<rkw:or or1=\'{newEventReservation.shippingAddress.firstName}\' or2=\'{editMode}\' />',then:'{newEventReservation.firstName}',else:'{frontendUser.firstName}')}" additionalAttributes="{autocomplete:'fname'}" />
 	</div>
 
 	<div class="v320-1">
 		<label class="form-label" for="tx_rkwevents_pi1_lastName">
 			<f:translate key="tx_rkwevents_domain_model_eventreservation.lastName" />
-			<f:if condition="<rkw:isMandatoryField fieldName='lastName' mandatoryFields='{settings.mandatoryFields.eventReservationMainPerson}' />">
+			<f:if condition="<rkw:isMandatoryField fieldName='shippingAddress.lastName' mandatoryFields='{settings.mandatoryFields.eventReservationMainPerson}' />">
 				<span class='optional'>&nbsp;<f:translate key="tx_rkwevents_fluid.label_optional" /></span>
 			</f:if>
 		</label>
-		<f:form.textfield property="lastName" id="tx_rkwevents_pi1_lastName" value="{f:if(condition:'<rkw:or or1=\'{newEventReservation.lastName}\' or2=\'{editMode}\' />',then:'{newEventReservation.lastName}',else:'{frontendUser.lastName}')}" additionalAttributes="{autocomplete:'lname'}" />
+		<f:form.textfield property="shippingAddress.lastName" id="tx_rkwevents_pi1_lastName" value="{f:if(condition:'<rkw:or or1=\'{newEventReservation.shippingAddress.lastName}\' or2=\'{editMode}\' />',then:'{newEventReservation.lastName}',else:'{frontendUser.lastName}')}" additionalAttributes="{autocomplete:'lname'}" />
 	</div>
 
 	<div class="v320-1">
@@ -80,39 +80,39 @@
 				<span class='optional'>&nbsp;<f:translate key="tx_rkwevents_fluid.label_optional" /></span>
 			</f:if>
 		</label>
-		<f:form.textfield  property="company" id="tx_rkwevents_pi1_company" value="{f:if(condition:'<rkw:or or1=\'{newEventReservation.company}\' or2=\'{editMode}\' />',then:'{newEventReservation.company}',else:'{frontendUser.company}')}" />
+		<f:form.textfield  property="shippingAddress.company" id="tx_rkwevents_pi1_company" value="{f:if(condition:'<rkw:or or1=\'{newEventReservation.shippingAddress.company}\' or2=\'{editMode}\' />',then:'{newEventReservation.shippingAddress.company}',else:'{frontendUser.company}')}" />
 	</div>
 
 
 	<div class="v320-1">
 		<label class="form-label" for="tx_rkwevents_pi1_address">
 			<f:translate key="tx_rkwevents_domain_model_eventreservation.address" />
-			<f:if condition="<rkw:isMandatoryField fieldName='address' mandatoryFields='{settings.mandatoryFields.eventReservationMainPerson}' />">
+			<f:if condition="<rkw:isMandatoryField fieldName='shippingAddress.address' mandatoryFields='{settings.mandatoryFields.eventReservationMainPerson}' />">
 				<span class='optional'>&nbsp;<f:translate key="tx_rkwevents_fluid.label_optional" /></span>
 			</f:if>
 		</label>
-		<f:form.textfield  property="address" id="tx_rkwevents_pi1_address" value="{f:if(condition:'<rkw:or or1=\'{newEventReservation.address}\' or2=\'{editMode}\' />',then:'{newEventReservation.address}',else:'{frontendUser.address}')}" additionalAttributes="{autocomplete:'address'}" />
+		<f:form.textfield  property="shippingAddress.address" id="tx_rkwevents_pi1_address" value="{f:if(condition:'<rkw:or or1=\'{newEventReservation.shippingAddress.address}\' or2=\'{editMode}\' />',then:'{newEventReservation.shippingAddress.address}',else:'{frontendUser.address}')}" additionalAttributes="{autocomplete:'address'}" />
 	</div>
 
 
 	<div class="v320-1">
 		<label class="form-label" for="tx_rkwevents_pi1_zip">
 			<f:translate key="tx_rkwevents_domain_model_eventreservation.zip" />
-			<f:if condition="<rkw:isMandatoryField fieldName='zip' mandatoryFields='{settings.mandatoryFields.eventReservationMainPerson}' />">
+			<f:if condition="<rkw:isMandatoryField fieldName='shippingAddress.zip' mandatoryFields='{settings.mandatoryFields.eventReservationMainPerson}' />">
 				<span class='optional'>&nbsp;<f:translate key="tx_rkwevents_fluid.label_optional" /></span>
 			</f:if>
 		</label>
-		<f:form.textfield property="zip" id="tx_rkwevents_pi1_zip" value="{f:if(condition:'<rkw:or or1=\'{newEventReservation.zip}\' or2=\'{editMode}\' />',then:'{newEventReservation.zip}',else:'{frontendUser.zip}')}" additionalAttributes="{autocomplete:'zip'}" />
+		<f:form.textfield property="shippingAddress.zip" id="tx_rkwevents_pi1_zip" value="{f:if(condition:'<rkw:or or1=\'{newEventReservation.shippingAddress.zip}\' or2=\'{editMode}\' />',then:'{newEventReservation.shippingAddress.zip}',else:'{frontendUser.zip}')}" additionalAttributes="{autocomplete:'zip'}" />
 	</div>
 
 	<div class="v320-1">
 		<label class="form-label" for="tx_rkwevents_pi1_city">
 			<f:translate key="tx_rkwevents_domain_model_eventreservation.city" />
-			<f:if condition="<rkw:isMandatoryField fieldName='city' mandatoryFields='{settings.mandatoryFields.eventReservationMainPerson}' />">
+			<f:if condition="<rkw:isMandatoryField fieldName='shippingAddress.city' mandatoryFields='{settings.mandatoryFields.eventReservationMainPerson}' />">
 				<span class='optional'>&nbsp;<f:translate key="tx_rkwevents_fluid.label_optional" /></span>
 			</f:if>
 		</label>
-		<f:form.textfield property="city" id="tx_rkwevents_pi1_city" value="{f:if(condition:'<rkw:or or1=\'{newEventReservation.city}\' or2=\'{editMode}\' />',then:'{newEventReservation.city}',else:'{frontendUser.city}')}" additionalAttributes="{autocomplete:'city'}" />
+		<f:form.textfield property="shippingAddress.city" id="tx_rkwevents_pi1_city" value="{f:if(condition:'<rkw:or or1=\'{newEventReservation.shippingAddress.city}\' or2=\'{editMode}\' />',then:'{newEventReservation.shippingAddress.city}',else:'{frontendUser.city}')}" additionalAttributes="{autocomplete:'city'}" />
 	</div>
 
 	<!--

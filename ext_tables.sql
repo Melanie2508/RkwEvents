@@ -264,6 +264,7 @@ CREATE TABLE tx_rkwevents_domain_model_eventreservation (
 	fax varchar(255) DEFAULT '' NOT NULL,
 	email varchar(255) DEFAULT '' NOT NULL,
 	server_host varchar(255) DEFAULT '' NOT NULL,
+    shipping_address int(11) unsigned DEFAULT '0' NOT NULL,
 
   	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
   	crdate int(11) unsigned DEFAULT '0' NOT NULL,

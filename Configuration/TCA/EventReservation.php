@@ -237,6 +237,21 @@ $GLOBALS['TCA']['tx_rkwevents_domain_model_eventreservation'] = array(
 				'readOnly' => 1,
 			),
 		),
+        'shipping_address' => array(
+            'label'=>'LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkwregistration_domain_model_eventreservation.shippingaddress',
+            'exclude' => 0,
+            'config' => array(
+                'type' => 'select',
+                'renderType' => 'selectSingle',
+                'foreign_table' => 'tx_rkwregistration_domain_model_shippingaddress',
+                'foreign_table_where' => 'AND tx_rkwregistration_domain_model_shippingaddress.hidden = 0 AND tx_rkwregistration_domain_model_shippingaddress.deleted = 0 ORDER BY name ASC',
+                'minitems' => 0,
+                'maxitems' => 1,
+                'items' => array(
+                    array('LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkwregistration_domain_model_shippingaddress.please_choose', 0),
+                ),
+            ),
+        ),
 
 	),
 );
