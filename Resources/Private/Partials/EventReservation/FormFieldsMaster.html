@@ -15,7 +15,7 @@
 		<f:form.select property="shippingAddress.gender" id="tx_rkwevents_pi1_salutation" value="{f:if(condition:'<rkw:or firstIsSalutation=\'true\' or1=\'{newEventReservation.shippingAddress.gender}\' or2=\'{editMode}\' />',then:'{newEventReservation.shippingAddress.gender}',else:'{frontendUser.txRkwregistrationGender}')}" options="{99: '{f:translate(key: \'tx_rkwevents_domain_model_eventreservation.salutation.I.99\')}', 0: '{f:translate(key: \'tx_rkwevents_domain_model_eventreservation.salutation.I.0\')}', 1: '{f:translate(key: \'tx_rkwevents_domain_model_eventreservation.salutation.I.1\')}'}" />
 	</div>
 
-	<div class="v320-1">
+	<div class="v320-1 ui-front">
 		<label class="form-label" for="tx_rkwevents_pi1_txRkwregistrationTitle">
 			<f:translate key="tx_rkwevents_domain_model_eventreservation.title" />
 			<f:if condition="<rkw:isMandatoryField fieldName='shippingAddress.title.name' mandatoryFields='{settings.mandatoryFields.eventReservationMainPerson}' />">
@@ -23,11 +23,7 @@
 			</f:if>
 		</label>
 		<f:form.textfield property="shippingAddress.title.name" id="tx_rkwevents_pi1_title" additionalAttributes="{autocomplete: 'off'}" value="{newEventReservation.shippingAddress.title.name}"/>
-		<rkwRegistration:titleAutoComplete
-			inputId="tx_rkwevents_pi1_title"
-			container="tx_rkwevents_pi1_title_autocomplete-container"
-			list="tx_rkwevents_pi1_title_autocomplete-results"
-		></rkwRegistration:titleAutoComplete>
+		<f:widget.autocomplete objects="{titles}" for="tx_rkwevents_pi1_title" searchProperty="name"></f:widget.autocomplete>
 	</div>
 
 	<div class="v320-1">

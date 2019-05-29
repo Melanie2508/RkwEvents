@@ -172,6 +172,11 @@ plugin.tx_rkwevents {
             1 = {$plugin.tx_rkwevents.view.partialRootPath}
             2 = EXT:rkw_registration/Resources/Private/Partials/
         }
+        widget {
+            TYPO3\CMS\Fluid\ViewHelpers\Widget\AutocompleteViewHelper {
+                templateRootPath = EXT:rkw_registration/Resources/Private/Templates/
+            }
+        }
     }
 	persistence {
 		storagePid = {$plugin.tx_rkwevents.persistence.storagePid}

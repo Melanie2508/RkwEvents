@@ -93,9 +93,9 @@
 		<f:else>
 			<p>
 				<f:if condition="{reservation.company}">{reservation.company}<br/></f:if>
-				{reservation.firstName} {reservation.lastName} <f:if condition="{frontendUser}">({frontendUser.username})</f:if><br/>
-				{reservation.address}<br/>
-				{reservation.zip} {reservation.city}<br/>
+				{reservation.shippingAddress.firstName} {reservation.shippingAddress.lastName} <f:if condition="{frontendUser}">({frontendUser.username})</f:if><br/>
+				{reservation.shippingAddress.address}<br/>
+				{reservation.shippingAddress.zip} {reservation.shippingAddress.city}<br/>
 			</p>
 			<f:if condition="{reservation.remark}">
 				<p>

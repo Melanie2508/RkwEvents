@@ -20,13 +20,13 @@ namespace RKW\RkwEvents\Domain\Model;
  * @author Carlos Meyer <cm@davitec.de>
  * @author Maximilian Fäßler <maximilian@faesslerweb.de>
  * @author Steffen Kroggel <developer@steffenkroggel.de>
+ * @author Christian Dilger <c.dilger@addorange.de>
  * @copyright Rkw Kompetenzzentrum
  * @package RKW_RkwEvents
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
 class EventReservation extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 {
-
 
     /**
      * event
@@ -58,21 +58,7 @@ class EventReservation extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $salutation = 99;
 
     /**
-     * title
-     *
-     * @var string
-     */
-    protected $title;
-
-    /**
-     * txRkwregistrationTitle
-     *
-     * @var \RKW\RkwRegistration\Domain\Model\Title
-     */
-    protected $txRkwregistrationTitle = null;
-
-    /**
-     * The corresponding shipping address of the main user
+     * Shipping address of main user
      *
      * @var \RKW\RkwRegistration\Domain\Model\ShippingAddress
      */
@@ -333,27 +319,6 @@ class EventReservation extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
-     * Returns the title
-     *
-     * @return string $title
-     */
-    public function getTitle()
-    {
-        return $this->title;
-    }
-
-    /**
-     * Sets the title
-     *
-     * @param string $title
-     * @return void
-     */
-    public function setTitle($title)
-    {
-        $this->title = $title;
-    }
-
-    /**
      * Returns the firstName
      *
      * @return string $firstName
@@ -540,29 +505,6 @@ class EventReservation extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setEmail($email)
     {
         $this->email = $email;
-    }
-
-    /**
-     * Sets the txRkwregistrationTitle
-     *
-     * Hint: default "null" is needed to make value in forms optional
-     *
-     * @param \RKW\RkwRegistration\Domain\Model\Title $txRkwregistrationTitle
-     * @return void
-     */
-    public function setTxRkwregistrationTitle(\RKW\RkwRegistration\Domain\Model\Title $txRkwregistrationTitle = null)
-    {
-        $this->txRkwregistrationTitle = $txRkwregistrationTitle;
-    }
-
-    /**
-     * Returns the txRkwregistrationTitle
-     *
-     * @return \RKW\RkwRegistration\Domain\Model\Title $txRkwregistrationTitle
-     */
-    public function getTxRkwregistrationTitle()
-    {
-        return $this->txRkwregistrationTitle;
     }
 
     /**

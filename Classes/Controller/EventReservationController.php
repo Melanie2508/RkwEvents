@@ -207,10 +207,16 @@ class EventReservationController extends \TYPO3\CMS\Extbase\Mvc\Controller\Actio
         }
         $newEventReservation->setEvent($event);
 
+        /** @var \TYPO3\CMS\Extbase\Object\ObjectManager $objectManager */
+        $objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Object\\ObjectManager');
+        /** @var \RKW\RkwRegistration\Domain\Repository\TitleRepository $titleRepository */
+        $titleRepository = $objectManager->get('RKW\\RkwRegistration\\Domain\\Repository\\TitleRepository');
+
         $this->view->assign('event', $event);
         $this->view->assign('newEventReservation', $newEventReservation);
         $this->view->assign('frontendUser', $this->getFrontendUser());
         $this->view->assign('validFrontendUserEmail', \RKW\RkwRegistration\Tools\Registration::validEmail($this->getFrontendUser()));
+        $this->view->assign('titles', $titleRepository->findAllOfType(true, false, false));
 
     }
 
@@ -344,6 +350,7 @@ class EventReservationController extends \TYPO3\CMS\Extbase\Mvc\Controller\Actio
             //===
         }
 
+        $newEventReservation->getShippingAddress()->setTitle(\RKW\RkwRegistration\Utilities\TitleUtility::extractTxRegistrationTitle($newEventReservation->getShippingAddress()->getTitle()->getName()));
 
         // if user is logged in and has a valid email, create the reservation now!
         if (
@@ -382,21 +389,19 @@ class EventReservationController extends \TYPO3\CMS\Extbase\Mvc\Controller\Actio
                 //===
             }
 
-            $newEventReservation->setTxRkwregistrationTitle((\RKW\RkwRegistration\Utilities\TitleUtility::extractTxRegistrationTitle($newEventReservation->getTitle())));
-
             // register new user or simply send opt-in to existing user
             /** @var \RKW\RkwRegistration\Tools\Registration $registration */
             $registration = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('RKW\\RkwRegistration\\Tools\\Registration');
             $registration->register(
                 array(
-                    'tx_rkwregistration_gender' => $newEventReservation->getSalutation(),
-                    'tx_rkwregistration_title'  => $newEventReservation->getTxRkwregistrationTitle(),
-                    'first_name'                => $newEventReservation->getFirstName(),
-                    'last_name'                 => $newEventReservation->getLastName(),
-                    'company'                   => $newEventReservation->getCompany(),
-                    'address'                   => $newEventReservation->getAddress(),
-                    'zip'                       => $newEventReservation->getZip(),
-                    'city'                      => $newEventReservation->getCity(),
+                    'tx_rkwregistration_gender' => $newEventReservation->getShippingAddress()->getGender(),
+                    'tx_rkwregistration_title'  => $newEventReservation->getShippingAddress()->getTitle(),
+                    'first_name'                => $newEventReservation->getShippingAddress()->getFirstName(),
+                    'last_name'                 => $newEventReservation->getShippingAddress()->getLastName(),
+                    'company'                   => $newEventReservation->getShippingAddress()->getCompany(),
+                    'address'                   => $newEventReservation->getShippingAddress()->getAddress(),
+                    'zip'                       => $newEventReservation->getShippingAddress()->getZip(),
+                    'city'                      => $newEventReservation->getShippingAddress()->getCity(),
                     'email'                     => $newEventReservation->getEmail(),
                     'username'                  => ($this->getFrontendUser() ? $this->getFrontendUser()->getUsername() : $newEventReservation->getEmail()),
                 ),
@@ -673,9 +678,6 @@ class EventReservationController extends \TYPO3\CMS\Extbase\Mvc\Controller\Actio
             // this "editMode" is a sign / marker and a simple way to use the FormFields-Partial in multiple ways
             $this->view->assign('editMode', 1);
 
-            //  Set attribute title as string instead of \RKW\RkwRegistration\Domain\Model\Title
-            $eventReservation->setTitle($eventReservation->getTxRkwregistrationTitle()->getName());
-
             /** @var \TYPO3\CMS\Extbase\Object\ObjectManager $objectManager */
             $objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Object\\ObjectManager');
             /** @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage $tempObjectStorage */
@@ -730,6 +732,7 @@ class EventReservationController extends \TYPO3\CMS\Extbase\Mvc\Controller\Actio
      */
     public function updateAction(\RKW\RkwEvents\Domain\Model\EventReservation $eventReservation)
     {
+
         if ($feUser = $this->getFrontendUser()) {
 
             // 1. security check
@@ -782,6 +785,7 @@ class EventReservationController extends \TYPO3\CMS\Extbase\Mvc\Controller\Actio
 
             // 3. some merging of FE-user
             if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('rkw_registration')) {
+
                 DivUtility::mergeFeUsers($eventReservation, $feUser);
 
                 /** @var \TYPO3\CMS\Extbase\Object\ObjectManager $objectManager */
@@ -791,6 +795,11 @@ class EventReservationController extends \TYPO3\CMS\Extbase\Mvc\Controller\Actio
                 $frontendUserRepository = $objectManager->get('RKW\\RkwRegistration\\Domain\\Repository\\FrontendUserRepository');
                 $frontendUserRepository->update($feUser);
             }
+
+            //  Prevent dirty object from being automatically persisted! Therefore save it in a temporary variable and reset the model! Then use the temporary variable to persist a possibly new object.
+            $tempTitle = $eventReservation->getShippingAddress()->getTitle()->getName();
+            $eventReservation->getShippingAddress()->getTitle()->setName($eventReservation->getShippingAddress()->getTitle()->_getCleanProperty('name'));
+            $eventReservation->getShippingAddress()->setTitle(\RKW\RkwRegistration\Utilities\TitleUtility::extractTxRegistrationTitle($tempTitle));
 
             // 4. finally save the whole stuff
             $this->eventReservationRepository->update($eventReservation);
@@ -1115,8 +1124,9 @@ class EventReservationController extends \TYPO3\CMS\Extbase\Mvc\Controller\Actio
 
 
     /**
-     * finalSaveOrder
-     * Adds the order finally to database and sends information mails to user and admin
+     * finalSaveReservation
+     *
+     * Adds the reservation finally to database and sends information mails to user and admin
      * This function is used by "createOptInReservationAction" and "create"-function
      * Added by Maximilian Fäßler | FäßlerWeb
      *

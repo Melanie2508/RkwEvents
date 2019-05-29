@@ -253,7 +253,6 @@ CREATE TABLE tx_rkwevents_domain_model_eventreservation (
   	add_person varchar(255) DEFAULT '' NOT NULL,
   	fe_user varchar(255) DEFAULT '' NOT NULL,
   	salutation int(11) DEFAULT '99' NOT NULL,
-	tx_rkwregistration_title int(11) unsigned DEFAULT '0' NOT NULL,
 	first_name varchar(255) DEFAULT '' NOT NULL,
 	last_name varchar(255) DEFAULT '' NOT NULL,
 	company varchar(255) DEFAULT '' NOT NULL,

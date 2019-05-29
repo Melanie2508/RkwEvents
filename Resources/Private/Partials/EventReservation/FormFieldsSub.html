@@ -49,7 +49,7 @@
 
 		</div>
 
-		<div class="v320-1">
+		<div class="v320-1 ui-front">
 
 			<label class="form-label" for="tx_rkwevents_pi1_{i.index}_title">
 				<f:translate key="tx_rkwevents_domain_model_eventreservation.title" />
@@ -58,11 +58,7 @@
 				</f:if>
 			</label>
 			<f:form.textfield property="addPerson.{i.index}.title" id="tx_rkwevents_pi1_{i.index}_title" additionalAttributes="{autocomplete: 'off'}"/>
-			<rkwRegistration:titleAutoComplete
-				inputId="tx_rkwevents_pi1_{i.index}_title"
-				container="tx_rkwevents_pi1_{i.index}_title_autocomplete-container"
-				list="tx_rkwevents_pi1_{i.index}_title_autocomplete-results"
-			></rkwRegistration:titleAutoComplete>
+			<f:widget.autocomplete objects="{titles}" for="tx_rkwevents_pi1_{i.index}_title" searchProperty="name"></f:widget.autocomplete>
 
 		</div>
 
