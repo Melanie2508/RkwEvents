@@ -15,6 +15,8 @@ CREATE TABLE tx_rkwevents_domain_model_event (
 	testimonials text NOT NULL,
 	description text NOT NULL,
 	target_group text NOT NULL,
+	target_groups varchar(255) DEFAULT '' NOT NULL,
+	prioritized_target_groups varchar(255) DEFAULT '' NOT NULL,
 	schedule text NOT NULL,
 	partner text NOT NULL,
 	seats int(11) DEFAULT '0' NOT NULL,

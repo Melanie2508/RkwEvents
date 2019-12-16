@@ -35,6 +35,12 @@
 			<trans-unit id="tx_rkwevents_domain_model_event.target_group" approved="yes">
 				<source>Target Group</source>
 			</trans-unit>
+			<trans-unit id="tx_rkwevents_domain_model_event.target_groups" approved="yes">
+				<source>Target Groups</source>
+			</trans-unit>
+			<trans-unit id="tx_rkwevents_domain_model_event.prioritized_target_groups" approved="yes">
+				<source>Prioritized Target Groups</source>
+			</trans-unit>
 			<trans-unit id="tx_rkwevents_domain_model_event.partner" approved="yes">
 				<source>Partner</source>
 			</trans-unit>

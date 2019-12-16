@@ -38,6 +38,12 @@
 			<trans-unit id="tx_rkwevents_domain_model_event.target_group">
 				<source>Target Group</source>
 			</trans-unit>
+			<trans-unit id="tx_rkwevents_domain_model_event.target_groups">
+				<source>Target Groups</source>
+			</trans-unit>
+			<trans-unit id="tx_rkwevents_domain_model_event.prioritized_target_groups">
+				<source>Prioritized Target Groups</source>
+			</trans-unit>
 			<trans-unit id="tx_rkwevents_domain_model_event.schedule">
 				<source>Schedule as Table</source>
 			</trans-unit>
