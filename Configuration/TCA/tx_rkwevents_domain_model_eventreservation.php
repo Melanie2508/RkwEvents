@@ -15,14 +15,14 @@ return [
 		'delete' => 'deleted',
 		'enablecolumns' => [
 		],
-		'searchFields' => 'event,remark,add_person,fe_user,salutation,first_name,last_name,company,address,zip,city,phone,email,server_host,',
+		'searchFields' => 'event,remark,add_person,fe_user,salutation,first_name,last_name,company,address,zip,city,phone,email, target_group,server_host,',
 		'iconfile' => 'EXT:rkw_events/Resources/Public/Icons/tx_rkwevents_domain_model_eventreservation.gif'
 	],
 	'interface' => [
-		'showRecordFieldList' => 'event, fe_user, salutation, first_name, last_name, company, address, zip, city, phone, email, remark, add_person, server_host,',
+		'showRecordFieldList' => 'event, fe_user, salutation, first_name, last_name, company, address, zip, city, phone, email, target_group, remark, add_person, server_host,',
 	],
 	'types' => [
-		'1' => ['showitem' => 'event, fe_user, salutation, first_name, last_name, company, address, zip, city, phone, email, remark, add_person, server_host'],
+		'1' => ['showitem' => 'event, fe_user, salutation, first_name, last_name, company, address, zip, city, phone, email, target_group, remark, add_person, server_host'],
 	],
 	'palettes' => [
 		'1' => ['showitem' => ''],
@@ -218,5 +218,17 @@ return [
 				'readOnly' => 1,
 			],
 		],
+        'target_group' => [
+            'label' => 'LLL:EXT:rkw_events/Resources/Private/Language/locallang_db.xlf:tx_rkwevents_domain_model_eventreservation.target_group',
+            'exclude' => 0,
+            'config' => [
+                'type' => 'select',
+                'renderType' => 'selectSingle',
+                'foreign_table' => 'tx_rkwbasics_domain_model_targetgroup',
+                'foreign_table_where' => 'AND tx_rkwbasics_domain_model_targetgroup.deleted = 0 ORDER BY name ASC',
+                'minitems' => 0,
+                'maxitems' => 1,
+            ],
+        ],
 	],
 ];

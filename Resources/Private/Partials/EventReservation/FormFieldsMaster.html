@@ -157,6 +157,17 @@
 </f:if>
 
 
+<!-- target group -->
+<div class="v320-1">
+    <label class="form-label" for="tx_rkwevents_pi1_targetGroup">
+        <f:translate key="tx_rkwevents_domain_model_eventreservation.target_group" />
+        <f:if condition="<rkw:isMandatoryField fieldName='targetGroup' mandatoryFields='{settings.mandatoryFields.eventReservationMainPerson}' />">
+            <span class='optional'>&nbsp;<f:translate key="tx_rkwevents_fluid.label_optional" /></span>
+        </f:if>
+    </label>
+    <f:form.select property="targetGroup" id="tx_rkwevents_pi1_targetGroup" options="{targetGroups}" optionValueField="uid" optionLabelField="name" />
+</div>
+
 <!-- remark and questions -->
 <div class="v320-1">
 	<label class="form-label" for="tx_rkwevents_pi1_remark">

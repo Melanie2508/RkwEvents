@@ -184,6 +184,10 @@
 				<source>E-Mail</source>
 				<target>E-Mail</target>
 			</trans-unit>
+			<trans-unit id="tx_rkwevents_domain_model_eventreservation.target_group" approved="yes">
+				<source>Target Group</source>
+				<target>Teilnehmertyp</target>
+			</trans-unit>
 			<trans-unit id="tx_rkwevents_domain_model_eventreservation.remark" approved="yes">
 				<source>Remarks</source>
 				<target><![CDATA[Bemerkungen &amp; Fragen]]></target>

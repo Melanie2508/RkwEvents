@@ -281,8 +281,8 @@ return [
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectMultipleSideBySide',
-                'foreign_table' => 'tx_rkwbasics_domain_model_target_group',
-                'foreign_table_where' => 'ORDER BY tx_rkwbasics_domain_model_target_group.name ASC',
+                'foreign_table' => 'tx_rkwbasics_domain_model_targetgroup',
+                'foreign_table_where' => 'ORDER BY tx_rkwbasics_domain_model_targetgroup.name ASC',
                 'maxitems'            => 9999,
                 'appearance'          => [
                     'collapseAll'                     => 0,
@@ -299,8 +299,8 @@ return [
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectMultipleSideBySide',
-                'foreign_table' => 'tx_rkwbasics_domain_model_target_group',
-                'foreign_table_where' => 'ORDER BY tx_rkwbasics_domain_model_target_group.name ASC',
+                'foreign_table' => 'tx_rkwbasics_domain_model_targetgroup',
+                'foreign_table_where' => 'ORDER BY tx_rkwbasics_domain_model_targetgroup.name ASC',
                 'maxitems'            => 9999,
                 'appearance'          => [
                     'collapseAll'                     => 0,

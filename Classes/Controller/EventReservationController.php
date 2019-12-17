@@ -140,6 +140,13 @@ class EventReservationController extends \TYPO3\CMS\Extbase\Mvc\Controller\Actio
      */
     protected $logger;
 
+    /**
+     * targetGroupRepository
+     *
+     * @var \RKW\RkwBasics\Domain\Repository\TargetGroupRepository
+     * @inject
+     */
+    protected $targetGroupRepository = null;
 
     /**
      * initializeAction
@@ -211,6 +218,7 @@ class EventReservationController extends \TYPO3\CMS\Extbase\Mvc\Controller\Actio
         $this->view->assign('event', $event);
         $this->view->assign('newEventReservation', $newEventReservation);
         $this->view->assign('frontendUser', $this->getFrontendUser());
+        $this->view->assign('targetGroups', $this->targetGroupRepository->findAll());
         $this->view->assign('validFrontendUserEmail', \RKW\RkwRegistration\Tools\Registration::validEmail($this->getFrontendUser()));
 
     }

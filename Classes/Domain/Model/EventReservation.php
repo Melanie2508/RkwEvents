@@ -121,6 +121,13 @@ class EventReservation extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $email;
 
     /**
+     * targetGroup
+     *
+     * @var \RKW\RkwBasics\Domain\Model\TargetGroup
+     */
+    protected $targetGroup = null;
+
+    /**
      * remark
      *
      * @var string
@@ -586,5 +593,22 @@ class EventReservation extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function getServerHost()
     {
         return $this->serverHost;
+    }
+
+    /**
+     * @return \RKW\RkwBasics\Domain\Model\TargetGroup
+     */
+    public function getTargetGroup()
+    {
+        return $this->targetGroup;
+    }
+
+    /**
+     * @param \RKW\RkwBasics\Domain\Model\TargetGroup $targetGroup
+     * @return void
+     */
+    public function setTargetGroup($targetGroup)
+    {
+        $this->targetGroup = $targetGroup;
     }
 }
