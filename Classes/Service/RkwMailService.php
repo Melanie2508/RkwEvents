@@ -148,6 +148,35 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
         }
     }
 
+    /**
+     * Handles mail for user with pending confirmation
+     * Works with RkwRegistration-FrontendUser -> this is correct! (data comes from TxRkwRegistration)
+     *
+     * @param \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser
+     * @param \RKW\RkwEvents\Domain\Model\EventReservation $eventReservation
+     * @return void
+     * @throws \RKW\RkwMailer\Service\MailException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
+     * @throws \TYPO3\CMS\Fluid\View\Exception\InvalidTemplateResourceException
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
+     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
+     */
+    public function confirmReservationPendingUser(\RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser, \RKW\RkwEvents\Domain\Model\EventReservation $eventReservation)
+    {
+        // send confirmation
+        $this->userMail($frontendUser, $eventReservation, 'pending', true);
+
+        if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('rkw_survey')) {
+            // send additional mail for survey (is some "surveyBefore" ist set in event)
+            if ($eventReservation->getEvent()->getSurveyBefore()) {
+                $this->userMail($frontendUser, $eventReservation, 'survey');
+            }
+        }
+    }
+
 
     /**
      * Handles confirm mail for admin

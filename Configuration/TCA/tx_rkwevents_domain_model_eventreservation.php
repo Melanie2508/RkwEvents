@@ -15,14 +15,14 @@ return [
 		'delete' => 'deleted',
 		'enablecolumns' => [
 		],
-		'searchFields' => 'event,remark,add_person,fe_user,salutation,first_name,last_name,company,address,zip,city,phone,email, target_group,server_host,',
+		'searchFields' => 'event,remark,add_person,fe_user,salutation,first_name,last_name,company,address,zip,city,phone,email, target_group, confirmation_date,server_host,',
 		'iconfile' => 'EXT:rkw_events/Resources/Public/Icons/tx_rkwevents_domain_model_eventreservation.gif'
 	],
 	'interface' => [
-		'showRecordFieldList' => 'event, fe_user, salutation, first_name, last_name, company, address, zip, city, phone, email, target_group, remark, add_person, server_host,',
+		'showRecordFieldList' => 'event, fe_user, salutation, first_name, last_name, company, address, zip, city, phone, email, target_group, confirmation_date, remark, add_person, server_host,',
 	],
 	'types' => [
-		'1' => ['showitem' => 'event, fe_user, salutation, first_name, last_name, company, address, zip, city, phone, email, target_group, remark, add_person, server_host'],
+		'1' => ['showitem' => 'event, fe_user, salutation, first_name, last_name, company, address, zip, city, phone, email, target_group, confirmation_date, remark, add_person, server_host'],
 	],
 	'palettes' => [
 		'1' => ['showitem' => ''],
@@ -228,6 +228,22 @@ return [
                 'foreign_table_where' => 'AND tx_rkwbasics_domain_model_targetgroup.deleted = 0 ORDER BY name ASC',
                 'minitems' => 0,
                 'maxitems' => 1,
+            ],
+        ],
+        'confirmation_date' => [
+            'exclude' => 0,
+            'l10n_mode' => 'mergeIfNotBlank',
+            'label' => 'LLL:EXT:rkw_events/Resources/Private/Language/locallang_db.xlf:tx_rkwevents_domain_model_eventreservation.confirmation_date',
+            'config' => [
+                'type' => 'input',
+                'size' => 13,
+                'max' => 20,
+                'eval' => 'datetime',
+                'checkbox' => 0,
+                'default' => 0,
+                'range' => [
+                    'lower' => mktime(0, 0, 0, date('m'), date('d'), date('Y')),
+                ],
             ],
         ],
 	],

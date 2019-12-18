@@ -153,6 +153,13 @@ call_user_func(
 
         $signalSlotDispatcher->connect(
             'RKW\\RkwEvents\\Controller\\EventReservationController',
+            \RKW\RkwEvents\Controller\EventReservationController::SIGNAL_AFTER_RESERVATION_CREATED_PENDING_USER,
+            'RKW\\RkwEvents\\Service\\RkwMailService',
+            'confirmReservationPendingUser'
+        );
+
+        $signalSlotDispatcher->connect(
+            'RKW\\RkwEvents\\Controller\\EventReservationController',
             \RKW\RkwEvents\Controller\EventReservationController::SIGNAL_AFTER_RESERVATION_CREATED_ADMIN,
             'RKW\\RkwEvents\\Service\\RkwMailService',
             'confirmReservationAdmin'

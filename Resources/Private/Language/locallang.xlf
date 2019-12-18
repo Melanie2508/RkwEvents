@@ -771,6 +771,9 @@
 			<trans-unit id="rkwMailService.confirmationReservationUser.subject" approved="yes">
 				<source>Thank you for your reservation</source>
 			</trans-unit>
+			<trans-unit id="rkwMailService.pendingReservationUser.subject" approved="yes">
+				<source>Thank you for your reservation</source>
+			</trans-unit>
 			<trans-unit id="rkwMailService.surveyReservationUser.subject" approved="yes">
 				<source>Survey for event</source>
 			</trans-unit>
@@ -911,7 +914,28 @@
                 <source>Login here to change or delete your reservation.</source>
             </trans-unit>
 
-
+			<!-- Templates/Email/PendingReservationUser.html -->
+			<trans-unit id="templates_email_pendingReservationUser.headline">
+				<source>Hello %s %s,</source>
+			</trans-unit>
+			<trans-unit id="templates_email_pendingReservationUser.text1">
+				<source>thank you for your reservation.</source>
+			</trans-unit>
+			<trans-unit id="templates_email_pendingReservationUser.text2">
+				<source>Please find below the details of your reservation.</source>
+			</trans-unit>
+			<trans-unit id="templates_email_pendingReservationUser.billing">
+				<source>You will receive an invoice in a few days.</source>
+			</trans-unit>
+			<trans-unit id="templates_email_pendingReservationUser.changeDeleteHeadline">
+				<source>Change / Delete</source>
+			</trans-unit>
+			<trans-unit id="templates_email_pendingReservationUser.text3">
+				<source>Login here to change or delete your reservation.</source>
+			</trans-unit>
+            <trans-unit id="templates_email_pendingReservationUser.onlineEventAccessLink">
+                <source>Login here to change or delete your reservation.</source>
+            </trans-unit>
 
 			<!-- Templates/Email/ConfirmationReservationAdmin.html -->
 			<trans-unit id="templates_email_confirmationReservationAdmin.headline">

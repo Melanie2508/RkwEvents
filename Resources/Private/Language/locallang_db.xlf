@@ -384,6 +384,9 @@
 			<trans-unit id="tx_rkwevents_domain_model_eventreservation.target_group" approved="yes">
 				<source>Target group</source>
 			</trans-unit>
+			<trans-unit id="tx_rkwevents_domain_model_eventreservation.confirmation_date" approved="yes">
+				<source>Confirmation date</source>
+			</trans-unit>
 
 
 			<!-- tx_rkwevents_domain_model_eventreservationaddperson -->

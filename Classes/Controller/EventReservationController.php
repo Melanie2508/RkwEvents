@@ -50,6 +50,13 @@ class EventReservationController extends \TYPO3\CMS\Extbase\Mvc\Controller\Actio
      *
      * @const string
      */
+    const SIGNAL_AFTER_RESERVATION_CREATED_PENDING_USER = 'afterReservationCreatedPendingUser';
+
+    /**
+     * Signal name for use in ext_localconf.php
+     *
+     * @const string
+     */
     const SIGNAL_AFTER_RESERVATION_UPDATE_ADMIN = 'afterUpdateReservationAdmin';
 
     /**
@@ -1161,6 +1168,11 @@ class EventReservationController extends \TYPO3\CMS\Extbase\Mvc\Controller\Actio
             );
         }
 
+        //  check target group
+        if ($newEventReservation->getEvent()->getPrioritizedTargetGroups()->count() === 0 || $newEventReservation->getEvent()->getPrioritizedTargetGroups()->offsetExists($this->targetGroupRepository->findByUid($newEventReservation->getTargetGroup()->getUid()))) {
+            $newEventReservation->setConfirmationDate(time());
+        }
+
         $this->eventReservationRepository->add($newEventReservation);
         $this->persistenceManager->persistAll();
 
@@ -1173,8 +1185,12 @@ class EventReservationController extends \TYPO3\CMS\Extbase\Mvc\Controller\Actio
         $this->eventRepository->update($event);
         $this->persistenceManager->persistAll();
 
-        // 4. send final confirmation mail to user
-        $this->signalSlotDispatcher->dispatch(__CLASS__, self::SIGNAL_AFTER_RESERVATION_CREATED_USER, array($feUser, $newEventReservation));
+        // 4. send final confirmation mail to user, depending on yet confirmed or not
+        if ($newEventReservation->getConfirmationDate() > 0) {
+            $this->signalSlotDispatcher->dispatch(__CLASS__, self::SIGNAL_AFTER_RESERVATION_CREATED_USER, array($feUser, $newEventReservation));
+        } else {
+            $this->signalSlotDispatcher->dispatch(__CLASS__, self::SIGNAL_AFTER_RESERVATION_CREATED_PENDING_USER, array($feUser, $newEventReservation));
+        }
 
         // 5. send information mail to be-users
         $adminMails = array();

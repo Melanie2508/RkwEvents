@@ -91,6 +91,20 @@ class Event extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $targetGroup;
 
     /**
+     * targetGroups
+     *
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RKW\RkwBasics\Domain\Model\TargetGroup>
+     */
+    protected $targetGroups = null;
+
+    /**
+     * prioritizedTargetGroups
+     *
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RKW\RkwBasics\Domain\Model\TargetGroup>
+     */
+    protected $prioritizedTargetGroups = null;
+
+    /**
      *    schedule
      *
      * @var string
@@ -615,6 +629,48 @@ class Event extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setTargetGroup($targetGroup)
     {
         $this->targetGroup = $targetGroup;
+    }
+
+    /**
+     * Returns the targetGroups
+     *
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RKW\RkwBasics\Domain\Model\TargetGroup> $targetGroups
+     */
+    public function getTargetGroups()
+    {
+        return $this->targetGroups;
+    }
+
+    /**
+     * Sets the targetGroups
+     *
+    * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RKW\RkwBasics\Domain\Model\TargetGroup> $targetGroups
+    * @return void
+    */
+    public function setTargetGroups(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $targetGroups)
+    {
+        $this->targetGroups = $targetGroups;
+    }
+
+    /**
+     * Returns the prioritizedTargetGroups
+     *
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RKW\RkwBasics\Domain\Model\TargetGroup> $targetGroups
+     */
+    public function getPrioritizedTargetGroups()
+    {
+        return $this->prioritizedTargetGroups;
+    }
+
+    /**
+     * Sets the prioritizedTargetGroups
+     *
+     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RKW\RkwBasics\Domain\Model\TargetGroup> $prioritizedTargetGroups
+     * @return void
+     */
+    public function setPrioritizedTargetGroups(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $prioritizedTargetGroups)
+    {
+        $this->prioritizedTargetGroups = $prioritizedTargetGroups;
     }
 
     /**

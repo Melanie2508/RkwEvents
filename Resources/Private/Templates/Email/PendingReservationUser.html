@@ -1,0 +1,55 @@
+{namespace vh=RKW\RkwMailer\ViewHelpers}
+{namespace vh1=RKW\RkwEvents\ViewHelpers}
+<f:layout name="Email/{mailType}" />
+
+
+<!-- PLAINTEXT -->
+<f:section name="Plaintext">
+<vh:frontend.translate key="templates_email_pendingReservationUser.headline" languageKey="{frontendUser.txRkwregistrationLanguageKey}" extensionName="rkwEvents" arguments="{0 : frontendUser.firstName, 1: frontendUser.lastName}" />
+
+<vh:frontend.translate key="templates_email_pendingReservationUser.text1" languageKey="{frontendUser.txRkwregistrationLanguageKey}" extensionName="rkwEvents" />
+<vh:frontend.translate key="templates_email_pendingReservationUser.text2" languageKey="{frontendUser.txRkwregistrationLanguageKey}" extensionName="rkwEvents" />
+<f:if condition="{reservation.event.costsReg}"><vh:frontend.translate key="templates_email_pendingReservationUser.billing" languageKey="{frontendUser.txRkwregistrationLanguageKey}" extensionName="rkwEvents" /></f:if>
+
+<f:render partial="Email/Details" section="Plaintext" arguments="{reservation: reservation, frontendUser: frontendUser, language:frontendUser.txRkwregistrationLanguageKey, showPid: showPid, isRegistered : 1}"/>
+
+=============================================================
+<vh:frontend.translate key="templates_email_pendingReservationUser.changeDeleteHeadline" languageKey="{frontendUser.txRkwregistrationLanguageKey}" extensionName="rkwEvents" />
+=============================================================
+<vh:frontend.translate key="templates_email_pendingReservationUser.text3" languageKey="{frontendUser.txRkwregistrationLanguageKey}" extensionName="rkwEvents" />
+<vh:frontend.link absolute="TRUE" pageUid="{loginPid}" />
+</f:section>
+
+<!-- HTML -->
+<f:section name="Html">
+	<h1><vh:frontend.translate key="templates_email_pendingReservationUser.headline" languageKey="{frontendUser.txRkwregistrationLanguageKey}" extensionName="rkwEvents" arguments="{0 : frontendUser.firstName, 1: frontendUser.lastName}" /></h1>
+	<p>
+		<vh:frontend.translate key="templates_email_pendingReservationUser.text1" languageKey="{frontendUser.txRkwregistrationLanguageKey}" extensionName="rkwEvents" /><br>
+		<vh:frontend.translate key="templates_email_pendingReservationUser.text2" languageKey="{frontendUser.txRkwregistrationLanguageKey}" extensionName="rkwEvents" />
+	</p>
+	<f:if condition="{reservation.event.costsReg}">
+		<p>
+			<vh:frontend.translate key="templates_email_pendingReservationUser.billing" languageKey="{frontendUser.txRkwregistrationLanguageKey}" extensionName="rkwEvents" />
+		</p>
+	</f:if>
+
+	<f:render partial="Email/Details" section="Html" arguments="{reservation:reservation, frontendUser: frontendUser, language:frontendUser.txRkwregistrationLanguageKey, showPid: showPid, isRegistered : 1}"/>
+
+	<h2><vh:frontend.translate key="templates_email_pendingReservationUser.changeDeleteHeadline" languageKey="{frontendUser.txRkwregistrationLanguageKey}" extensionName="rkwEvents" /></h2>
+	<p>
+		<a href="<vh:frontend.link absolute='TRUE' pageUid='{loginPid}' />" target="_blank"><vh:frontend.translate key="templates_email_pendingReservationUser.text3" languageKey="{frontendUser.txRkwregistrationLanguageKey}" extensionName="rkwEvents" /></a>
+	</p>
+</f:section>
+
+
+<!-- Calendar -->
+<f:section name="Calendar">BEGIN:VEVENT
+UID:<vh1:calendarGmtDate format="Ymd\THis" date="{currentTime}" />-{uniqueKey}@rkw.de
+DTSTART;TZID=GMT:<vh1:calendarGmtDate format="Ymd\THis" date="{reservation.event.start}" />
+DTEND;TZID=GMT:<vh1:calendarGmtDate format="Ymd\THis" date="{reservation.event.end}" />
+DTSTAMP;TZID=GMT:<vh1:calendarGmtDate format="Ymd\THis" date="{currentTime}" /><f:if condition="{reservation.event.onlineEvent} != 1">
+LOCATION:{reservation.event.place.name}, <f:if condition="{reservation.event.place.address}">{reservation.event.place.address} </f:if><f:if condition="{reservation.event.place.zip}"><f:if condition="{reservation.event.place.city}">, {reservation.event.place.zip} {reservation.event.place.city}</f:if></f:if><f:if condition="{reservation.event.place.country}"><f:if condition="{reservation.event.place.country.shortNameLocal}">, {reservation.event.place.country.shortNameLocal}</f:if></f:if></f:if>
+SUMMARY:{reservation.event.documentType.name}: {reservation.event.title}<f:if condition="{reservation.event.onlineEvent}">
+<f:if condition="{reservation.event.onlineEventAccessLink}">DESCRIPTION: <vh:frontend.translate key="templates_email_pendingReservationUser.onlineEventAccessLink" languageKey="{language}" extensionName="rkwEvents" /> <f:uri.external uri="{reservation.event.onlineEventAccessLink}"/></f:if></f:if>
+CLASS:PUBLIC
+END:VEVENT</f:section>

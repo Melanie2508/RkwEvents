@@ -167,6 +167,12 @@ class EventReservation extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     protected $serverHost = '';
 
+    /**
+     * confirmationDate
+     *
+     * @var integer
+     */
+    protected $confirmationDate;
 
     /**
      * __construct
@@ -610,5 +616,26 @@ class EventReservation extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setTargetGroup($targetGroup)
     {
         $this->targetGroup = $targetGroup;
+    }
+
+    /**
+     * Returns the confirmationDate
+     *
+     * @return int
+     */
+    public function getConfirmationDate()
+    {
+        return $this->confirmationDate;
+    }
+
+    /**
+     * Sets the confirmationDate
+     *
+     * @param int $confirmationDate
+     * @return void
+     */
+    public function setConfirmationDate($confirmationDate)
+    {
+        $this->confirmationDate = $confirmationDate;
     }
 }

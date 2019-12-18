@@ -996,6 +996,10 @@
 				<source>Thank you for your reservation</source>
 				<target>Danke für Ihre Anmeldung</target>
 			</trans-unit>
+			<trans-unit id="rkwMailService.pendingReservationUser.subject" approved="yes">
+				<source>Thank you for your reservation</source>
+				<target>Danke für Ihre Anmeldung (Warteliste)</target>
+			</trans-unit>
 			<trans-unit id="rkwMailService.surveyReservationUser.subject" approved="yes">
 				<source>Survey for event</source>
 				<target>Vorab-Umfrage zur Veranstaltung</target>
@@ -1174,6 +1178,37 @@
 				<target>Loggen Sie sich hier ein, um Ihre Anmeldung zu löschen oder zu ändern.</target>
 			</trans-unit>
             <trans-unit id="templates_email_confirmationReservationUser.onlineEventAccessLink">
+                <source>Click here to join</source>
+                <target>Ab ca. 10 Minuten vor Beginn der Veranstaltung können Sie sich über diesen Link direkt in die Veranstaltung einwählen:</target>
+            </trans-unit>
+
+
+            <!-- Templates/Email/PendingReservationUser.html -->
+			<trans-unit id="templates_email_pendingReservationUser.headline">
+				<source>Hello %s %s,</source>
+				<target>Hallo %s %s,</target>
+			</trans-unit>
+			<trans-unit id="templates_email_pendingReservationUser.text1">
+				<source>thank you for your reservation.</source>
+				<target>vielen Dank für Ihre Anmeldung zu einer Veranstaltung des RKW.</target>
+			</trans-unit>
+			<trans-unit id="templates_email_pendingReservationUser.text2">
+				<source>Please find below the details of your reservation.</source>
+				<target>Untenstehend finden Sie die Details Ihrer Anmeldung. Bei Rückfragen können Sie einfach direkt auf diese E-Mail antworten.</target>
+			</trans-unit>
+			<trans-unit id="templates_email_pendingReservationUser.billing">
+				<source>You will receive an invoice in a few days.</source>
+				<target>In Kürze erhalten Sie von uns eine Rechnung.</target>
+			</trans-unit>
+			<trans-unit id="templates_email_pendingReservationUser.changeDeleteHeadline">
+				<source>Change / Delete</source>
+				<target>Löschen / Ändern</target>
+			</trans-unit>
+			<trans-unit id="templates_email_pendingReservationUser.text3">
+				<source>Login here to change or delete your reservation.</source>
+				<target>Loggen Sie sich hier ein, um Ihre Anmeldung zu löschen oder zu ändern.</target>
+			</trans-unit>
+            <trans-unit id="templates_email_pendingReservationUser.onlineEventAccessLink">
                 <source>Click here to join</source>
                 <target>Ab ca. 10 Minuten vor Beginn der Veranstaltung können Sie sich über diesen Link direkt in die Veranstaltung einwählen:</target>
             </trans-unit>
