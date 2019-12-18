@@ -22,7 +22,7 @@ return [
             'starttime' => 'starttime',
             'endtime' => 'endtime',
         ],
-		'searchFields' => 'title,subtitle,start,end,longitude,latitude,testimonials,description,schedule,target_group, target_groups, prioritized_target_groups,partner,seats,costs_reg,costs_red,reg_required,reg_single,reg_end,ext_reg_link,document_type,department,categories,series,logos,currency,place,online_event, online_event_access_link,external_contact,be_user,add_info,presentations, sheet,gallery1,gallery2,reservation,workshop1,workshop2,workshop3,',
+		'searchFields' => 'title,subtitle,start,end,longitude,latitude,testimonials,description,schedule,target_group, target_groups, prioritized_target_groups, partner,seats,costs_reg,costs_red,reg_required,reg_single,reg_end,ext_reg_link,document_type,department,categories,series,logos,currency,place,online_event, online_event_access_link,external_contact,be_user,add_info,presentations, sheet,gallery1,gallery2,reservation,workshop1,workshop2,workshop3,',
         'iconfile' => 'EXT:rkw_events/Resources/Public/Icons/tx_rkwevents_domain_model_event.gif'
     ],
     'interface' => [
@@ -34,12 +34,12 @@ return [
                 sys_language_uid, l10n_parent, l10n_diffsource, hidden,--palette--;;1, title, subtitle,  start, end, reg_end, document_type, series, department, organizer,
 
                 --div--;LLL:EXT:rkw_events/Resources/Private/Language/locallang_db.xlf:tx_rkwevents_domain_model_event.tab_additionaldata,
-                description, target_group, target_groups, prioritized_target_groups, partner, add_info, schedule, testimonials,
+                description, target_group, partner, add_info, schedule, testimonials,
 
                 --div--;LLL:EXT:rkw_events/Resources/Private/Language/locallang_db.xlf:tx_rkwevents_domain_model_event.tab_register,
                 ' .
                 // seats, costs_reg, costs_red, costs_red_condition, currency, costs_tax, reg_required, online_event, online_event_access_link, ext_reg_link, survey_before, survey_after, survey_after_mail_tstamp,
-                'seats, costs_reg, costs_red, costs_red_condition, currency, costs_tax, reg_required, reg_single, online_event, online_event_access_link, ext_reg_link,
+                'seats, costs_reg, costs_red, costs_red_condition, currency, costs_tax, reg_required, reg_single, online_event, online_event_access_link, ext_reg_link, target_groups, prioritized_target_groups, approval_auto, approval_date, 
                 
                 --div--;LLL:EXT:rkw_events/Resources/Private/Language/locallang_db.xlf:tx_rkwevents_domain_model_event.tab_place_contact,
                 place, be_user, external_contact, longitude, latitude,
@@ -967,6 +967,26 @@ return [
                 'range' => [
                     'lower' => mktime(0, 0, 0, date('m'), date('d'), date('Y')),
                 ],
+            ],
+        ],
+        'approval_auto' => [
+            'exclude' => 0,
+            'label' => 'LLL:EXT:rkw_events/Resources/Private/Language/locallang_db.xlf:tx_rkwevents_domain_model_event.approval_auto',
+            'config' => [
+                'type' => 'check',
+                'default' => 0
+            ]
+        ],
+        'approval_date' => [
+            'exclude' => 0,
+            'label' => 'LLL:EXT:rkw_events/Resources/Private/Language/locallang_db.xlf:tx_rkwevents_domain_model_event.approval_date',
+            'config' => [
+                'type' => 'input',
+                'size' => 13,
+                'max' => 20,
+                'eval' => 'datetime',
+                'checkbox' => 0,
+                'default' => 0,
             ],
         ],
     ],

@@ -57,6 +57,14 @@
 				<source>Prioritized Target Groups</source>
 				<target>Zielgruppen für bevorzugte Anmeldung</target>
 			</trans-unit>
+			<trans-unit id="tx_rkwevents_domain_model_event.approval_auto" approved="yes">
+				<source>Automatic approval of registrations</source>
+				<target>Automatische Freigabe der Anmeldungen</target>
+			</trans-unit>
+			<trans-unit id="tx_rkwevents_domain_model_event.approval_date" approved="yes">
+				<source>Date to approve registrations</source>
+				<target>Zeitpunkt der Freigabe der Anmeldungen</target>
+			</trans-unit>
 			<trans-unit id="tx_rkwevents_domain_model_event.schedule">
 				<source>Schedule as Table</source>
 				<target>Programm als Tabelle</target>

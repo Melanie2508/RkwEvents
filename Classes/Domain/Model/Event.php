@@ -197,6 +197,20 @@ class Event extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $onlineEventAccessLink;
 
     /**
+     * approvalAuto
+     *
+     * @var boolean
+     */
+    protected $approvalAuto = false;
+
+    /**
+     * approvalDate
+     *
+     * @var integer
+     */
+    protected $approvalDate;
+
+    /**
      * Holds place
      *
      * @var \RKW\RkwEvents\Domain\Model\EventPlace
@@ -1931,6 +1945,38 @@ class Event extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function getDeleted()
     {
         return $this->deleted;
+    }
+
+    /**
+     * @return int
+     */
+    public function getApprovalDate()
+    {
+        return $this->approvalDate;
+    }
+
+    /**
+     * @param int $approvalDate
+     */
+    public function setApprovalDate($approvalDate)
+    {
+        $this->approvalDate = $approvalDate;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isApprovalAuto()
+    {
+        return $this->approvalAuto;
+    }
+
+    /**
+     * @param bool $approvalAuto
+     */
+    public function setApprovalAuto($approvalAuto)
+    {
+        $this->approvalAuto = $approvalAuto;
     }
 
 }
