@@ -358,7 +358,10 @@
 				<source>(optional)</source>
 				<target>(optional)</target>
 			</trans-unit>
-
+			<trans-unit id="tx_rkwevents_fluid.select.none">
+				<source>-- Please select --</source>
+				<target>-- Bitte wählen --</target>
+			</trans-unit>
 
 			<!-- ==================================================================================== -->
 

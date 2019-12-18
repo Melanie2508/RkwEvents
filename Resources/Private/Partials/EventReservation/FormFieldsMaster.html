@@ -165,7 +165,7 @@
             <span class='optional'>&nbsp;<f:translate key="tx_rkwevents_fluid.label_optional" /></span>
         </f:if>
     </label>
-    <f:form.select property="targetGroup" id="tx_rkwevents_pi1_targetGroup" options="{targetGroups}" optionValueField="uid" optionLabelField="name" />
+    <f:form.select property="targetGroup" id="tx_rkwevents_pi1_targetGroup" options="{targetGroups}" optionValueField="uid" optionLabelField="name" prependOptionLabel="{f:translate(key:'tx_rkwevents_fluid.select.none')}" prependOptionValue="0"/>
 </div>
 
 <!-- remark and questions -->
