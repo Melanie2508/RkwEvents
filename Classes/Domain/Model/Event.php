@@ -1684,6 +1684,30 @@ class Event extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
+     * Returns the pending reservations
+     *
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RKW\RkwEvents\Domain\Model\EventReservation> $reservation
+     */
+    public function getPendingReservations()
+    {
+        $eventReservationRepository = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('RKW\\RkwEvents\\Domain\\Repository\\EventReservationRepository');
+
+        return $eventReservationRepository->findAllPendingReservationsByEvent($this);
+    }
+
+    /**
+     * Returns the confirmed reservations
+     *
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RKW\RkwEvents\Domain\Model\EventReservation> $reservation
+     */
+    public function getConfirmedReservations()
+    {
+        $eventReservationRepository = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('RKW\\RkwEvents\\Domain\\Repository\\EventReservationRepository');
+
+        return $eventReservationRepository->findAllConfirmedReservationsByEvent($this);
+    }
+
+    /**
      * Adds a EventWorkshop
      *
      * @param \RKW\RkwEvents\Domain\Model\EventWorkshop $workshop

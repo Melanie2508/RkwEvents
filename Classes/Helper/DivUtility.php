@@ -14,6 +14,8 @@ namespace RKW\RkwEvents\Helper;
  * The TYPO3 project - inspiring people to share!
  */
 
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
+
 /**
  * DivUtility
  *
@@ -91,7 +93,7 @@ class DivUtility
     public static function countConfirmedReservations($event)
     {
 
-        $reservations = $event->getReservation();
+        $reservations = $event->getConfirmedReservations();
         $confirmedReservations = 0;
         if (count($reservations) > 0) {
             foreach ($reservations as $reservation) {

@@ -169,6 +169,7 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
         // send confirmation
         $this->userMail($frontendUser, $eventReservation, 'pending', true);
 
+        //  @todo: Survey schicken bei "Pending"?
         if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('rkw_survey')) {
             // send additional mail for survey (is some "surveyBefore" ist set in event)
             if ($eventReservation->getEvent()->getSurveyBefore()) {
@@ -441,6 +442,40 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
         }
     }
 
+    /**
+     * send final confirmation to user
+     *
+     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $eventReservationList
+     * @return void
+     * @throws \RKW\RkwMailer\Service\MailException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
+     * @throws \TYPO3\CMS\Fluid\View\Exception\InvalidTemplateResourceException
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
+     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
+     */
+    public function sendFinalConfirmation(\RKW\RkwEvents\Domain\Model\EventReservation $eventReservation)
+    {
+
+        $frontendUser = $eventReservation->getFeUser();
+
+        if ($frontendUser) {
+
+            // send confirmation
+            $this->userMail($frontendUser, $eventReservation, 'confirmation', true);
+
+            if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('rkw_survey')) {
+                // send additional mail for survey (is some "surveyBefore" ist set in event)
+                if ($eventReservation->getEvent()->getSurveyBefore()) {
+                    $this->userMail($frontendUser, $eventReservation, 'survey');
+                }
+            }
+
+        }
+
+    }
 
     /**
      * Sends an E-Mail to a Frontend-User

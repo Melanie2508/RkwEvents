@@ -1181,6 +1181,7 @@ class EventReservationController extends \TYPO3\CMS\Extbase\Mvc\Controller\Actio
 
         // 3. add it to event
         $event = $newEventReservation->getEvent();
+        //  @todo: Die Reservierung wird gesetzt ohne Rücksicht auf confirmed
         $event->addReservation($newEventReservation);
         $this->eventRepository->update($event);
         $this->persistenceManager->persistAll();

@@ -197,7 +197,7 @@
 				<source>Gallery and Sheets</source>
 			</trans-unit>
 			<trans-unit id="tx_rkwevents_domain_model_event.tab_reservation">
-				<source>Reservation</source>
+				<source>Reservations</source>
 			</trans-unit>
 			<trans-unit id="tx_rkwevents_domain_model_event.tab_workshop" approved="yes">
 				<source>Workshop</source>

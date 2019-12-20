@@ -50,7 +50,7 @@ return [
 
                 --div--;LLL:EXT:rkw_events/Resources/Private/Language/locallang_db.xlf:tx_rkwevents_domain_model_event.tab_reservation,
                 reservation,
-				
+                
 				' .
                 //--div--;LLL:EXT:rkw_events/Resources/Private/Language/locallang_db.xlf:tx_rkwevents_domain_model_event.tab_workshop,
 				// workshop1, workshop2, workshop3,
@@ -871,7 +871,7 @@ return [
             ],
         ],
 
-		'workshop1' => [
+        'workshop1' => [
 			'exclude' => 0,
 			'label' => 'LLL:EXT:rkw_events/Resources/Private/Language/locallang_db.xlf:tx_rkwevents_domain_model_event.workshop1',
 			'config' => [

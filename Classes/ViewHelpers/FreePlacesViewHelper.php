@@ -40,7 +40,7 @@ class FreePlacesViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractView
         $status = array('green', 'yellow', 'red');
 
         /** @var \RKW\RkwEvents\Domain\Model\Event $event */
-        $reservations = $event->getReservation();
+        $reservations = $event->getConfirmedReservations();
         $confirmedReservations = 0;
         if (count($reservations) > 0) {
             /** @var \RKW\RkwEvents\Domain\Model\EventReservation $reservation */

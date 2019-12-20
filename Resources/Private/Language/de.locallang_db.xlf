@@ -262,7 +262,7 @@
 				<target>Galerie und Folien</target>
 			</trans-unit>
 			<trans-unit id="tx_rkwevents_domain_model_event.tab_reservation" approved="yes">
-				<source>Reservation</source>
+				<source>Reservations</source>
 				<target>Reservierungen</target>
 			</trans-unit>
 			<trans-unit id="tx_rkwevents_domain_model_event.tab_workshop" approved="yes">

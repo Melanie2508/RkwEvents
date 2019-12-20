@@ -14,6 +14,9 @@ namespace RKW\RkwEvents\Controller;
  * The TYPO3 project - inspiring people to share!
  */
 
+use RKW\RkwEvents\Helper\DivUtility;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
+
 /**
  * Class EventCommandController
  *
@@ -84,7 +87,7 @@ class EventCommandController extends \TYPO3\CMS\Extbase\Mvc\Controller\CommandCo
 
                 /** @var \RKW\RkwEvents\Domain\Model\Event $event */
                 foreach ($eventList as $event) {
-                    if ($eventReservationList = $event->getReservation()) {
+                    if ($eventReservationList = $event->getConfirmedReservations()) {
 
                         // send mails
                         /** @var \RKW\RkwEvents\Service\RkwMailService $mailService */
@@ -128,7 +131,7 @@ class EventCommandController extends \TYPO3\CMS\Extbase\Mvc\Controller\CommandCo
                     /** @var \RKW\RkwEvents\Domain\Model\Event $event */
                     foreach ($eventList as $event) {
 
-                        if ($eventReservationList = $event->getReservation()) {
+                        if ($eventReservationList = $event->getConfirmedReservations()) {
 
                             /** @var \RKW\RkwEvents\Service\RkwMailService $mailService */
                             $mailService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('RKW\\RkwEvents\\Service\\RkwMailService');
@@ -153,6 +156,53 @@ class EventCommandController extends \TYPO3\CMS\Extbase\Mvc\Controller\CommandCo
         }
     }
 
+    /**
+     * Process pending reservations after end of registration
+     *
+     */
+    public function processPendingReservationsAfterRegistrationEndedCommand()
+    {
+
+        //  find all upcoming events, where approval/registration has ended and free seats are still available
+        $eventList = $this->eventRepository->findAllUpcomingApprovedEvents($approvalAuto = TRUE);
+
+        /** @var \RKW\RkwEvents\Domain\Model\Event $event */
+        foreach ($eventList as $event) {
+
+            if ($eventReservationList = $event->getPendingReservations()) {
+
+                /** @var \RKW\RkwEvents\Service\RkwMailService $mailService */
+                $mailService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('RKW\\RkwEvents\\Service\\RkwMailService');
+
+                //  trigger sending an email to confirm the corresponding users they are now finally confirmed
+                if (count($eventReservationList)) {
+
+                    foreach ($eventReservationList as $eventReservation) {
+
+                        if (DivUtility::hasFreeSeats($event, $eventReservation)) {
+
+                            $mailService->sendFinalConfirmation($eventReservation);
+
+                            //  set confirmationDate
+                            $eventReservation->setConfirmationDate(time());
+                            $this->eventReservationRepository->update($eventReservation);
+                            $this->persistenceManager->persistAll();
+
+                        } else {
+
+                            //  @todo: delete reservation and send email?
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    }
 
     /**
      * Returns logger instance

@@ -2,7 +2,9 @@
 
 namespace RKW\RkwEvents\Domain\Repository;
 
+use TYPO3\CMS\Core\Utility\DebugUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 
 /*
@@ -536,6 +538,50 @@ class EventRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         $query->setOrderings(array('tstamp' => QueryInterface::ORDER_ASCENDING));
 
         return $query->execute();
+        //===
+    }
+
+    /**
+     * Find all upcoming events, where registration has ended and free seats are still available
+     *
+     * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
+     */
+    public function findAllUpcomingApprovedEvents($approvalAuto = TRUE)
+    {
+
+
+        $query = $this->createQuery();
+
+        //  @todo: use approval date, if there is no approval date set, use registration end date
+
+        //  @todo: find only events to be automatically approved
+
+        //  @todo: find only event reservations, which are
+
+        $result = $query->matching(
+            $query->logicalAnd(
+                $query->logicalOr(
+                    $query->logicalAnd(
+                        $query->greaterThan('approval_date', 0)
+                    ),
+                    $query->logicalAnd(
+                        $query->equals('approval_date', 0),
+                        $query->greaterThan('reg_end', 0)
+                    )
+                ),
+                $query->greaterThan('start', time()),
+                $query->lessThan('approval_date', time()),
+                $query->greaterThan('approval_date', 0),
+                $query->equals('approval_auto', $approvalAuto)
+            )
+        )->execute();
+
+//        $parser = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\Storage\\Typo3DbQueryParser');
+//        $queryParts = $parser->parseQuery($query);
+//        \TYPO3\CMS\Core\Utility\DebugUtility::debug($queryParts, 'Query');
+
+        return $result;
         //===
     }
 

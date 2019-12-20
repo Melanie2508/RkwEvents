@@ -61,6 +61,61 @@ class EventReservationRepository extends \TYPO3\CMS\Extbase\Persistence\Reposito
         //===
     }
 
+
+    /**
+     * function findAllPendingReservationsByEvent
+     *
+     * @param \RKW\RkwEvents\Domain\Model\Event|int $event
+     * @param bool $respectStoragePid
+     * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     */
+    public function findAllPendingReservationsByEvent($event, $respectStoragePid = true)
+    {
+        $query = $this->createQuery();
+        if (!$respectStoragePid) {
+            $query->getQuerySettings()->setRespectStoragePage(false);
+        }
+
+        $query->setOrderings([
+            'uid' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING,
+        ]);
+
+        return $query->matching(
+            $query->logicalAnd(
+                $query->equals('event', $event),
+                $query->equals('confirmation_date', 0)
+            )
+        )->execute();
+        //===
+    }
+
+    /**
+     * function findAllConfirmedReservationsByEvent
+     *
+     * @param \RKW\RkwEvents\Domain\Model\Event|int $event
+     * @param bool $respectStoragePid
+     * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     */
+    public function findAllConfirmedReservationsByEvent($event, $respectStoragePid = true)
+    {
+        $query = $this->createQuery();
+        if (!$respectStoragePid) {
+            $query->getQuerySettings()->setRespectStoragePage(false);
+        }
+
+        $query->setOrderings([
+            'uid' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING,
+        ]);
+
+        return $query->matching(
+            $query->logicalAnd(
+                $query->equals('event', $event),
+                $query->greaterThan('confirmation_date', 0)
+            )
+        )->execute();
+        //===
+    }
+
     /**
      * function findByFeUser
      *
