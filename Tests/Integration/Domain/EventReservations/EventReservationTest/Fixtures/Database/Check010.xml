@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dataset>
+     <!-- event -->
+    <tx_rkwevents_domain_model_event>
+        <uid>1</uid>
+        <pid>1</pid>
+        <title>Meine Veranstaltung</title>
+        <description>Beschreibung meiner Veranstaltung</description>
+        <approval_auto>1</approval_auto>
+        <approval_date>1576854115</approval_date>
+        <testimonials></testimonials>
+        <target_group></target_group>
+        <schedule></schedule>
+        <partner></partner>
+        <seats>10</seats>
+    </tx_rkwevents_domain_model_event>
+    <!-- event reservation -->
+    <tx_rkwevents_domain_model_eventreservation>
+        <uid>1</uid>
+        <pid>1</pid>
+        <event>1</event>
+        <confirmation_date>0</confirmation_date>
+        <remark></remark>
+    </tx_rkwevents_domain_model_eventreservation>
+</dataset>

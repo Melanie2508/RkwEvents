@@ -157,36 +157,30 @@ class EventCommandController extends \TYPO3\CMS\Extbase\Mvc\Controller\CommandCo
     }
 
     /**
-     * Process pending reservations after end of registration
+     * Process pending reservations
      *
      */
-    public function processPendingReservationsAfterRegistrationEndedCommand()
+    public function processPendingReservationsCommand()
     {
-
         //  find all upcoming events, where approval/registration has ended and free seats are still available
-        $eventList = $this->eventRepository->findAllUpcomingApprovedEvents($approvalAuto = TRUE);
+        $eventList = $this->eventRepository->findAllUpcomingApprovableEvents($approvalAuto = TRUE);
 
-        /** @var \RKW\RkwEvents\Domain\Model\Event $event */
-        foreach ($eventList as $event) {
+        if ($eventList->count()) {
 
-            if ($eventReservationList = $event->getPendingReservations()) {
+            /** @var \RKW\RkwEvents\Domain\Model\Event $event */
+            foreach ($eventList as $event) {
 
-                /** @var \RKW\RkwEvents\Service\RkwMailService $mailService */
-                $mailService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('RKW\\RkwEvents\\Service\\RkwMailService');
+                if ($eventReservationList = $event->getPendingReservations()) {
 
-                //  trigger sending an email to confirm the corresponding users they are now finally confirmed
-                if (count($eventReservationList)) {
+                    //  trigger sending an email to confirm the corresponding users they are now finally confirmed
+                    /** @var \RKW\RkwEvents\Service\RkwMailService $mailService */
+                    $mailService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('RKW\\RkwEvents\\Service\\RkwMailService');
 
                     foreach ($eventReservationList as $eventReservation) {
 
                         if (DivUtility::hasFreeSeats($event, $eventReservation)) {
 
-                            $mailService->sendFinalConfirmation($eventReservation);
-
-                            //  set confirmationDate
-                            $eventReservation->setConfirmationDate(time());
-                            $this->eventReservationRepository->update($eventReservation);
-                            $this->persistenceManager->persistAll();
+                            $this->confirmReservation($mailService, $eventReservation);
 
                         } else {
 
@@ -217,5 +211,28 @@ class EventCommandController extends \TYPO3\CMS\Extbase\Mvc\Controller\CommandCo
 
         return $this->logger;
         //===
+    }
+
+    /**
+     * @param \RKW\RkwEvents\Service\RkwMailService $mailService
+     * @param \RKW\RkwEvents\Domain\Model\EventReservation $eventReservation
+     * @throws \RKW\RkwMailer\Service\MailException
+     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
+     * @throws \TYPO3\CMS\Fluid\View\Exception\InvalidTemplateResourceException
+     */
+    protected function confirmReservation(\RKW\RkwEvents\Service\RkwMailService $mailService, $eventReservation)
+    {
+        $mailService->sendFinalConfirmation($eventReservation);
+
+        //  set confirmationDate
+        $eventReservation->setConfirmationDate(time());
+
+        $this->eventReservationRepository->update($eventReservation);
+        $this->persistenceManager->persistAll();
     }
 }

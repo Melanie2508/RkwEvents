@@ -2,9 +2,7 @@
 
 namespace RKW\RkwEvents\Domain\Repository;
 
-use TYPO3\CMS\Core\Utility\DebugUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 
 /*
@@ -542,41 +540,51 @@ class EventRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     }
 
     /**
-     * Find all upcoming events, where registration has ended and free seats are still available
+     * Find all upcoming events, where approval/registration has ended and free seats are still available
      *
      * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
      */
-    public function findAllUpcomingApprovedEvents($approvalAuto = TRUE)
+    public function findAllUpcomingApprovableEvents($approvalAuto = TRUE)
     {
-
+        $now = time();
 
         $query = $this->createQuery();
 
-        //  @todo: use approval date, if there is no approval date set, use registration end date
+        //  Was ist zu suchen?
+        //  Events,
+        //  + deren start > $now ist,
+        //  + bei denen approval_auto === TRUE,
+        //  - deren reg_end > $now ist, sofern approval_date == 0,
+        //  - deren approval_date > $now ist, sofern approval_date > 0,
 
-        //  @todo: find only events to be automatically approved
+
+        //  @todo: use approval date, if there is no approval date set, use registration end date
 
         //  @todo: find only event reservations, which are
 
         $result = $query->matching(
             $query->logicalAnd(
+                $query->greaterThan('start', $now),
+                $query->equals('approval_auto', $approvalAuto),
                 $query->logicalOr(
                     $query->logicalAnd(
-                        $query->greaterThan('approval_date', 0)
+                        $query->greaterThan('approval_date', 0),
+                        $query->lessThan('approval_date', $now)
                     ),
                     $query->logicalAnd(
                         $query->equals('approval_date', 0),
-                        $query->greaterThan('reg_end', 0)
+                        $query->lessThan('reg_end', $now)
                     )
-                ),
-                $query->greaterThan('start', time()),
-                $query->lessThan('approval_date', time()),
-                $query->greaterThan('approval_date', 0),
-                $query->equals('approval_auto', $approvalAuto)
+                )
             )
         )->execute();
 
+//        $GLOBALS['TYPO3_DB']->store_lastBuiltQuery = true;
+//        $result->toArray();   //  necessary to provide the query to the system
+//        var_dump($GLOBALS['TYPO3_DB']->debug_lastBuiltQuery);
+//        $GLOBALS['TYPO3_DB']->store_lastBuiltQuery = false;
+//
 //        $parser = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\Storage\\Typo3DbQueryParser');
 //        $queryParts = $parser->parseQuery($query);
 //        \TYPO3\CMS\Core\Utility\DebugUtility::debug($queryParts, 'Query');

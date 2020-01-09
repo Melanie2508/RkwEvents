@@ -1990,7 +1990,7 @@ class Event extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * @return bool
      */
-    public function isApprovalAuto()
+    public function getApprovalAuto()
     {
         return $this->approvalAuto;
     }
