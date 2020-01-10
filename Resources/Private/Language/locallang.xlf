@@ -1107,8 +1107,11 @@
 			<trans-unit id="tx_rkwevents_validator.city">
 				<source>City</source>
 			</trans-unit>
+			<trans-unit id="tx_rkwevents_validator.targetGroup">
+				<source>Target group</source>
+			</trans-unit>
 			<trans-unit id="tx_rkwevents_validator.telephone">
-				<source>City</source>
+				<source>Phone</source>
 			</trans-unit>
 			<trans-unit id="tx_rkwevents_validator.additional_salutation_0">
 				<source>Salutation (person 2)</source>

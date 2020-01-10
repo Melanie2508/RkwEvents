@@ -1169,7 +1169,10 @@ class EventReservationController extends \TYPO3\CMS\Extbase\Mvc\Controller\Actio
         }
 
         //  check target group
-        if ($newEventReservation->getEvent()->getPrioritizedTargetGroups()->count() === 0 || $newEventReservation->getEvent()->getPrioritizedTargetGroups()->offsetExists($this->targetGroupRepository->findByUid($newEventReservation->getTargetGroup()->getUid()))) {
+        if (
+            $newEventReservation->getEvent()->getPrioritizedTargetGroups()->count() === 0
+            || $newEventReservation->getEvent()->getPrioritizedTargetGroups()->offsetExists($this->targetGroupRepository->findByUid($newEventReservation->getTargetGroup()->getUid()))
+        ) {
             $newEventReservation->setConfirmationDate(time());
         }
 

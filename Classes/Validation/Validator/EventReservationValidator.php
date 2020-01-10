@@ -4,6 +4,7 @@ namespace RKW\RkwEvents\Validation\Validator;
 
 use RKW\RkwEvents\Helper\DivUtility;
 use \RKW\RkwBasics\Helper\Common;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -54,6 +55,11 @@ class EventReservationValidator extends \TYPO3\CMS\Extbase\Validation\Validator\
         // get mandatory fields
         $mandatoryFieldsMainPerson = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(",", $this->settings['mandatoryFields']['eventReservationMainPerson']);
         $mandatoryFieldsAdditionalPersons = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(",", $this->settings['mandatoryFields']['eventReservationAdditionalPersons']);
+
+        //  conditionally add targetGroup to the mandatory fields, if prioritizedTargetGroups is set on the event.
+        if ($newEventReservation->getEvent()->getPrioritizedTargetGroups()->count() > 0) {
+            $mandatoryFieldsMainPerson[] = 'targetGroup';
+        }
 
         $isValid = true;
 
