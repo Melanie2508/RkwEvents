@@ -77,7 +77,7 @@ plugin.tx_rkwevents {
         defaultLanguageKey = de
 
         # cat=plugin.tx_rkwevents; type=boolean; label=Disable internal registration
-        disableInternalRegistration = 0
+        disableInternalRegistration = 1
 
 
 		mandatoryFields {

@@ -47,16 +47,20 @@ return [
                 --div--;LLL:EXT:rkw_events/Resources/Private/Language/locallang_db.xlf:tx_rkwevents_domain_model_event.tab_gallery,
                 //gallery1, gallery2, presentations, sheet,
                 presentations, sheet,
+                '
 
-                --div--;LLL:EXT:rkw_events/Resources/Private/Language/locallang_db.xlf:tx_rkwevents_domain_model_event.tab_reservation,
-                reservation,
-				
-				' .
+                // Hint: see /rkw_events/Configuration/TCA/Overrides/tx_rkwevents_domain_model_event.php
+             //   --div--;LLL:EXT:rkw_events/Resources/Private/Language/locallang_db.xlf:tx_rkwevents_domain_model_event.tab_reservation,
+             //   reservation,
+
                 //--div--;LLL:EXT:rkw_events/Resources/Private/Language/locallang_db.xlf:tx_rkwevents_domain_model_event.tab_workshop,
 				// workshop1, workshop2, workshop3,
 
-                '--div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access,
-                starttime, endtime',
+                // also moved to event override file to set it to the end
+              //  --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access,
+              //  starttime, endtime,'
+
+            ,
 
 
             // add RTE
@@ -384,7 +388,8 @@ return [
             'config' => [
                 'type' => 'check',
                 'default' => 0
-            ]
+            ],
+            'displayCond' =>'USER:RKW\\RkwEvents\\UserFunctions\\TcaDisplayCondition->displayIfDisableInternalRegistrationIsFalse',
         ],
         'reg_end' => [
             'exclude' => 0,
@@ -397,6 +402,7 @@ return [
                 'checkbox' => 0,
                 'default' => 0,
             ],
+            'displayCond' =>'USER:RKW\\RkwEvents\\UserFunctions\\TcaDisplayCondition->displayIfDisableInternalRegistrationIsFalse',
         ],
         'ext_reg_link' => [
             'exclude' => 0,
@@ -720,7 +726,8 @@ return [
             'displayCond' => [
                 'AND' => [
                     'FIELD:ext_reg_link:REQ:false',
-                    'FIELD:reg_required:REQ:true'
+                    'FIELD:reg_required:REQ:true',
+                    'USER:RKW\\RkwEvents\\UserFunctions\\TcaDisplayCondition->displayIfDisableInternalRegistrationIsFalse',
                 ],
             ],
             'exclude' => 0,

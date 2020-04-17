@@ -88,4 +88,19 @@ if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('rkw_survey')) 
 
     // @toDo: Not sure if this lines should be shown (was also commented out before in the top of the file],
     //$GLOBALS['TCA']['tx_rkwevents_domain_model_event']['types']['1']['showitem'] = str_replace(', ext_reg_link,', ', ext_reg_link,survey_before,survey_after,survey_after_mail_tstamp,', $GLOBALS['TCA']['tx_rkwevents_domain_model_event']['types']['1']['showitem']);
+
+    // add tab only, if internal registration is not disabled
+    $tcaDisplayCondition = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('RKW\\RkwEvents\\UserFunctions\\TcaDisplayCondition');
+    if ($tcaDisplayCondition->displayIfDisableInternalRegistrationIsFalse()) {
+        // add tab, if internal registration is allowed
+        $GLOBALS['TCA']['tx_rkwevents_domain_model_event']['types']['1']['showitem'] .=
+            '--div--;LLL:EXT:rkw_events/Resources/Private/Language/locallang_db.xlf:tx_rkwevents_domain_model_event.tab_reservation,
+            reservation,';
+    }
+    // add access tab in both cases to the end
+    $GLOBALS['TCA']['tx_rkwevents_domain_model_event']['types']['1']['showitem'] .=
+        '--div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access,
+        starttime, endtime,';
+
+
 }
