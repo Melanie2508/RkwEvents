@@ -12,6 +12,8 @@
                             <td>
                                 <strong>{eventReservation.event.title}</strong>
                                 <br>
+                                <rkw:ComposeDateTimeParts event='{eventReservation.event}' />
+                                <br>
                                 <f:if condition="{eventReservation.event.onlineEvent}">
                                     <f:then>
                                         <f:translate key="tx_rkwevents_fluid.partials_event_myListing.webinar" />
@@ -21,6 +23,8 @@
                                         {eventReservation.event.place.zip} {eventReservation.event.place.city}
                                     </f:else>
                                 </f:if>
+                                <br>
+                                {eventReservation.event.registerAddInformation}
                                 <br>
                                 <f:render partial="Event/Options" arguments="{_all}" />
                             </td>
