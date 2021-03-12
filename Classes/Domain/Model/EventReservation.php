@@ -79,6 +79,20 @@ class EventReservation extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $company;
 
     /**
+     * projectNumber
+     *
+     * @var string
+     */
+    protected $projectNumber;
+
+    /**
+     * projectName
+     *
+     * @var string
+     */
+    protected $projectName;
+
+    /**
      * address
      *
      * @var string
@@ -379,6 +393,48 @@ class EventReservation extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setCompany($company)
     {
         $this->company = $company;
+    }
+
+    /**
+     * Returns the projectNumber
+     *
+     * @return string $projectNumber
+     */
+    public function getProjectNumber()
+    {
+        return $this->projectNumber;
+    }
+
+    /**
+     * Sets the projectNumber
+     *
+     * @param string $projectNumber
+     * @return void
+     */
+    public function setProjectNumber($projectNumber)
+    {
+        $this->projectNumber = $projectNumber;
+    }
+
+    /**
+     * Returns the projectNumber
+     *
+     * @return string $projectName
+     */
+    public function getProjectName()
+    {
+        return $this->projectName;
+    }
+
+    /**
+     * Sets the projectNumber
+     *
+     * @param string $projectName
+     * @return void
+     */
+    public function setProjectName($projectName)
+    {
+        $this->projectName = $projectName;
     }
 
     /**

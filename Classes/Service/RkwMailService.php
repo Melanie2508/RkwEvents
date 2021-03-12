@@ -3,6 +3,7 @@
 namespace RKW\RkwEvents\Service;
 
 use \RKW\RkwBasics\Helper\Common;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use RKW\RkwEvents\Utility\DivUtility;
 
@@ -135,8 +136,11 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
      * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      */
-    public function confirmReservationUser(\RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser, \RKW\RkwEvents\Domain\Model\EventReservation $eventReservation)
+    public function confirmReservationUser(\RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser= null, \RKW\RkwEvents\Domain\Model\EventReservation $eventReservation)
     {
+
+        //  @todo: Wann erhält der Admin eine Mail?
+
         // send confirmation
         $this->userMail($frontendUser, $eventReservation, 'confirmation', true);
 
@@ -146,6 +150,7 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
                 $this->userMail($frontendUser, $eventReservation, 'survey');
             }
         }
+
     }
 
 
@@ -433,7 +438,7 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
      * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      */
-    protected function userMail(\RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser, \RKW\RkwEvents\Domain\Model\EventReservation $eventReservation, $action = 'confirmation', $sendCalendarMeeting = false)
+    protected function userMail(\RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser = null, \RKW\RkwEvents\Domain\Model\EventReservation $eventReservation, $action = 'confirmation', $sendCalendarMeeting = false)
     {
         // get settings
         $settings = $this->getSettings(ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
@@ -444,19 +449,39 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
             /** @var \RKW\RkwMailer\Service\MailService $mailService */
             $mailService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('RKW\\RkwMailer\\Service\\MailService');
 
-            // send new user an email with token
-            $mailService->setTo($frontendUser, array(
-                'marker' => array(
-                    'reservation'  => $eventReservation,
-                    'frontendUser' => $frontendUser,
-                    'pageUid'      => intval($GLOBALS['TSFE']->id),
-                    'loginPid'     => intval($settingsDefault['loginPid']),
-                    'showPid'      => intval($settingsDefault['showPid']),
-                    'uniqueKey'    => uniqid(),
-                    'currentTime'  => time(),
-                    'surveyPid'    => intval($settingsDefault['surveyPid']),
-                ),
-            ));
+            if ($eventReservation->getProjectNumber() !== '') {
+
+                // send new user an email with token
+                $mailService->setTo($frontendUser, array(
+                    'marker' => array(
+                        'reservation'  => $eventReservation,
+//                        'frontendUser' => $frontendUser,
+                        'pageUid'      => intval($GLOBALS['TSFE']->id),
+//                        'loginPid'     => intval($settingsDefault['loginPid']),
+                        'showPid'      => intval($settingsDefault['showPid']),
+                        'uniqueKey'    => uniqid(),
+                        'currentTime'  => time(),
+                        'surveyPid'    => intval($settingsDefault['surveyPid']),
+                    ),
+                ));
+
+            } else {
+
+                // send new user an email with token
+                $mailService->setTo($frontendUser, array(
+                    'marker' => array(
+                        'reservation'  => $eventReservation,
+                        'frontendUser' => $frontendUser,
+                        'pageUid'      => intval($GLOBALS['TSFE']->id),
+                        'loginPid'     => intval($settingsDefault['loginPid']),
+                        'showPid'      => intval($settingsDefault['showPid']),
+                        'uniqueKey'    => uniqid(),
+                        'currentTime'  => time(),
+                        'surveyPid'    => intval($settingsDefault['surveyPid']),
+                    ),
+                ));
+
+            }
 
             // set reply address
             if (count($eventReservation->getEvent()->getInternalContact()) > 0) {

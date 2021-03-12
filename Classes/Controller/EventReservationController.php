@@ -75,6 +75,13 @@ class EventReservationController extends \TYPO3\CMS\Extbase\Mvc\Controller\Actio
     const SIGNAL_AFTER_RESERVATION_DELETE_USER = 'afterDeleteReservationUser';
 
     /**
+     * Signal name for use in ext_localconf.php
+     *
+     * @const string
+     */
+    const SIGNAL_AFTER_REQUESTED_RESERVATION_WITHOUT_USER_REGISTRATION = 'afterRequestedReservationWithoutUserRegistration';
+
+    /**
      * eventRepository
      *
      * @var \RKW\RkwEvents\Domain\Repository\EventRepository
@@ -398,26 +405,41 @@ class EventReservationController extends \TYPO3\CMS\Extbase\Mvc\Controller\Actio
                 //===
             }
 
-            // register new user or simply send opt-in to existing user
-            /** @var \RKW\RkwRegistration\Tools\Registration $registration */
-            $registration = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('RKW\\RkwRegistration\\Tools\\Registration');
-            $registration->register(
-                array(
-                    'tx_rkwregistration_gender' => $newEventReservation->getSalutation(),
-                    'first_name'                => $newEventReservation->getFirstName(),
-                    'last_name'                 => $newEventReservation->getLastName(),
-                    'company'                   => $newEventReservation->getCompany(),
-                    'address'                   => $newEventReservation->getAddress(),
-                    'zip'                       => $newEventReservation->getZip(),
-                    'city'                      => $newEventReservation->getCity(),
-                    'email'                     => $newEventReservation->getEmail(),
-                    'username'                  => ($this->getFrontendUser() ? $this->getFrontendUser()->getUsername() : $newEventReservation->getEmail()),
-                ),
-                false,
-                $newEventReservation,
-                'rkwEvents',
-                $this->request
-            );
+
+            //  @todo: bis hierhin werden auch ProjektNummer, etc. übermittelt
+
+            //  @todo: FE-User-Registrierung umgehen und Signal feuern, dass den OptInRequest für das Event macht
+            if (trim($newEventReservation->getProjectNumber()) !== '') {
+
+                $this->signalSlotDispatcher->dispatch(__CLASS__, self::SIGNAL_AFTER_REQUESTED_RESERVATION_WITHOUT_USER_REGISTRATION, [null, $newEventReservation]);
+
+                DebuggerUtility::var_dump($newEventReservation);
+                exit();
+
+            } else {
+
+                // register new user or simply send opt-in to existing user
+                /** @var \RKW\RkwRegistration\Tools\Registration $registration */
+                $registration = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('RKW\\RkwRegistration\\Tools\\Registration');
+                $registration->register(
+                    array(
+                        'tx_rkwregistration_gender' => $newEventReservation->getSalutation(),
+                        'first_name'                => $newEventReservation->getFirstName(),
+                        'last_name'                 => $newEventReservation->getLastName(),
+                        'company'                   => $newEventReservation->getCompany(),
+                        'address'                   => $newEventReservation->getAddress(),
+                        'zip'                       => $newEventReservation->getZip(),
+                        'city'                      => $newEventReservation->getCity(),
+                        'email'                     => $newEventReservation->getEmail(),
+                        'username'                  => ($this->getFrontendUser() ? $this->getFrontendUser()->getUsername() : $newEventReservation->getEmail()),
+                    ),
+                    false,
+                    $newEventReservation,
+                    'rkwEvents',
+                    $this->request
+                );
+
+            }
 
             $this->addFlashMessage(
                 \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
@@ -1121,6 +1143,12 @@ class EventReservationController extends \TYPO3\CMS\Extbase\Mvc\Controller\Actio
      */
     protected function finalSaveReservation(\RKW\RkwEvents\Domain\Model\EventReservation $newEventReservation, \RKW\RkwRegistration\Domain\Model\FrontendUser $feUser, \RKW\RkwRegistration\Domain\Model\Registration $registration = null)
     {
+
+        //  @todo: Hier müsste eigentlich das komplette Objekt ankommen, also inklusive projectNumber und projectName
+
+        file_put_contents('event.txt', json_encode($newEventReservation));
+        exit();
+
         // optional service: Merge form data (eventReservation) in frontendUser, if some field is empty
         if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('rkw_registration')) {
             DivUtility::mergeFeUsers($newEventReservation, $feUser);

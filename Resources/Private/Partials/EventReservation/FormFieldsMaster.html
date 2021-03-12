@@ -86,6 +86,33 @@
         />
 	</div>
 
+    <div class="form__field width50">
+        <label class="form-label" for="tx_rkwevents_pi1_projectNumber">
+            <f:translate key="tx_rkwevents_domain_model_eventreservation.projectNumber" />
+            <f:render partial="LabelSuffix" arguments="{field: 'projectNumber', mandatoryFields: settings.mandatoryFields.eventReservationMainPerson}" />
+        </label>
+        <f:form.textfield
+            id="tx_rkwevents_pi1_projectNumber"
+            property="projectNumber"
+            value="{f:if(condition:'<rkw:or or1=\'{newEventReservation.projectNumber}\' or2=\'{editMode}\' />',then:'{newEventReservation.projectNumber}',else:'{frontendUser.projectNumber}')}"
+            additionalAttributes="{autocomplete:'projectNumber'}"
+        />
+    </div>
+
+
+    <div class="form__field width50">
+        <label class="form-label" for="tx_rkwevents_pi1_projectName">
+            <f:translate key="tx_rkwevents_domain_model_eventreservation.projectName" />
+            <f:render partial="LabelSuffix" arguments="{field: 'projectName', mandatoryFields: settings.mandatoryFields.eventReservationMainPerson}" />
+        </label>
+        <f:form.textfield
+            id="tx_rkwevents_pi1_projectName"
+            property="projectName"
+            value="{f:if(condition:'<rkw:or or1=\'{newEventReservation.projectName}\' or2=\'{editMode}\' />',then:'{newEventReservation.projectName}',else:'{frontendUser.projectName}')}"
+            additionalAttributes="{autocomplete:'projectName'}"
+        />
+    </div>
+
 
 	<div class="form__field width50">
 		<label class="form-label" for="tx_rkwevents_pi1_address">

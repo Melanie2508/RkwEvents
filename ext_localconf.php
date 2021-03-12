@@ -168,6 +168,15 @@ call_user_func(
             );
         }
 
+        //  @todo: add new signal to send optInRequest without creating a fe user account
+        //  @todo: Hmm, nein, der optInRequest muss hier nicht zwingend erfolgen, d. h. ich muss meine Reservierung nur bestätigen, wenn ich ein FE-User-Konto anlegen muss.
+        $signalSlotDispatcher->connect(
+            'RKW\\RkwEvents\\Controller\\EventReservationController',
+            \RKW\RkwEvents\Controller\EventReservationController::SIGNAL_AFTER_REQUESTED_RESERVATION_WITHOUT_USER_REGISTRATION,
+            'RKW\\RkwEvents\\Service\\RkwMailService',
+            'confirmReservationUser'
+        );
+
         $signalSlotDispatcher->connect(
             'RKW\\RkwEvents\\Controller\\EventReservationController',
             \RKW\RkwEvents\Controller\EventReservationController::SIGNAL_AFTER_RESERVATION_CREATED_USER,
